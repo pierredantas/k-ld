@@ -93,6 +93,35 @@ make d-prove          # kprove the 7 combinational/latch construct lemmas -> #To
   `kprove` (7 lemmas). The inductive timer/counter lemmas are open; the obstacle is
   documented in `proof/timer-spec.k`.
 
+## Using K-LD on your own programs
+
+K-LD is an independent oracle: you can run it on any IEC 61131-3 LD program and diff
+its verdict against **any** verifier (not just ESBMC). For a PLCopen XML diagram
+`mydiagram.ld` and a properties file `myprops.yaml` (using the `invariant` /
+`absence` / `mutual_exclusion` kinds, as in the benchmarks):
+
+```bash
+cd k-ld/rung6
+# 1. Translate the diagram into K-LD DSL. Pick the frontend by format:
+#    graphical netlist -> graphical2kld.py ; linear <rung> format -> plcopen2kld.py
+python3 graphical2kld.py mydiagram.ld gen/mydiagram.json > gen/mydiagram.ld
+
+# 2. Run K-LD as the oracle: it executes the diagram over input traces and checks
+#    each property on every scan, returning SAFE / VIOLATED(+witness) per property.
+python3 differential.py gen/mydiagram.ld gen/mydiagram.json myprops.yaml
+
+# 3. (optional) Compare against your verifier's verdict; use OpenPLC (validation/)
+#    as an independent tie-breaker on any disagreement.
+```
+
+**Scope.** This works out of the box for the Boolean-signal fragment with the
+standard function blocks: contacts, coils/latches, `TON`/`TOF`/`TP`, `CTU`/`CTD`,
+`R_TRIG`/`F_TRIG`, in both diagram formats. Outside it — non-Boolean data
+(integer/analog arithmetic), non-standard or vendor function blocks, or FBD/SFC
+bodies — the translator flags the unsupported construct rather than producing a wrong
+answer, and support is added rule-by-rule in `ld.k` (plus a case in the relevant
+`*2kld.py` frontend). This is a research artifact, not a hardened product.
+
 ## License
 
 MIT (see `.zenodo.json`).

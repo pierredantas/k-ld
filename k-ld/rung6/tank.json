@@ -1,0 +1,24 @@
+{
+  "kinds": {
+    "AUTO_MODE": "input",
+    "HIGH_SWITCH": "input",
+    "LOW_SWITCH": "input",
+    "PUMP": "output",
+    "VALVE": "output",
+    "Filling_Active": "local",
+    "Draining_Active": "local"
+  },
+  "inputs": [
+    "AUTO_MODE",
+    "HIGH_SWITCH",
+    "LOW_SWITCH"
+  ],
+  "outputs": [
+    "PUMP",
+    "VALVE"
+  ],
+  "locals": [
+    "Filling_Active",
+    "Draining_Active"
+  ]
+}

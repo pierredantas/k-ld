@@ -1,0 +1,8 @@
+# K-LD bounded differential: 64 scans (64 input combos x 1 sweeps)
+
+P1: VIOLATED @scan32  [invariant: !Fill_Valve || Bottle_Present]  Bottle_Present=F, Fill_Valve=T
+P2: VIOLATED @scan34  [invariant: !Fill_Valve || !Level_Full]  Fill_Valve=T, Level_Full=T
+P3: SAFE-up-to-bound  [invariant: !Emergency_Stop || !Fill_Valve]
+P4: VIOLATED @scan34  [absence: Alarm_Overfill && Fill_Valve]  Alarm_Overfill=T, Fill_Valve=T
+P5: SAFE-up-to-bound  [invariant: !Emergency_Stop || !Conveyor_Motor]
+P6: VIOLATED @scan32  [absence: Alarm_No_Bottle && Fill_Valve]  Alarm_No_Bottle=T, Fill_Valve=T

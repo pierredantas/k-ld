@@ -1,0 +1,10 @@
+OTE(rise_control_button_down) := XIC(control_button_down) * XIO(prev_control_button_down) ;
+OTE(rise_control_button_up) := XIC(control_button_up) * XIO(prev_control_button_up) ;
+OTE(rise_stairs_pir_sensor) := XIC(stairs_pir_sensor) * XIO(prev_stairs_pir_sensor) ;
+OTL(lights_buttons_state) := ( ( XIC(rise_control_button_down) + XIC(rise_control_button_up) ) * XIO(lights_buttons_state) ) ;
+OTU(lights_buttons_state) := ( ( XIC(rise_control_button_up) + XIC(rise_control_button_down) ) * XIC(lights_buttons_state) ) ;
+TOF(TOF0_Q, 20, XIC(rise_stairs_pir_sensor) * XIO(lights_buttons_state)) ;
+OTE(stairs_light) := XIC(TOF0_Q) + XIC(lights_buttons_state) ;
+OTE(prev_control_button_down) := XIC(control_button_down) ;
+OTE(prev_control_button_up) := XIC(control_button_up) ;
+OTE(prev_stairs_pir_sensor) := XIC(stairs_pir_sensor) ;

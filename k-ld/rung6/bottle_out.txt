@@ -1,0 +1,8 @@
+# K-LD bounded differential: 64 scans (64 input combos x 1 sweeps)
+
+P1: SAFE-up-to-bound  [invariant: !Fill_Valve || Bottle_Present]
+P2: SAFE-up-to-bound  [invariant: !Fill_Valve || !Level_Full]
+P3: SAFE-up-to-bound  [invariant: !Emergency_Stop || !Fill_Valve]
+P4: SAFE-up-to-bound  [absence: Alarm_Overfill && Fill_Valve]
+P5: SAFE-up-to-bound  [invariant: !Emergency_Stop || !Conveyor_Motor]
+P6: SAFE-up-to-bound  [absence: Alarm_No_Bottle && Fill_Valve]

@@ -1,0 +1,9 @@
+##### TANK (safe) #####
+# K-LD bounded differential: 24 scans (8 input combos x 3 sweeps)
+
+P2: SAFE-up-to-bound  [!PUMP || !HIGH_SWITCH]
+P3: SAFE-up-to-bound  [!VALVE || !LOW_SWITCH]
+P4: SAFE-up-to-bound  [AUTO_MODE || !PUMP]
+P5: SAFE-up-to-bound  [AUTO_MODE || !VALVE]
+
+##### BOTTLE_FILLING (safe) #####

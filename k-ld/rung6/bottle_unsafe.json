@@ -1,0 +1,47 @@
+{
+  "kinds": {
+    "Start_Button": "input",
+    "Stop_Button": "input",
+    "Emergency_Stop": "input",
+    "Bottle_Present": "input",
+    "Level_Full": "input",
+    "Conveyor_Ready": "input",
+    "Fill_Valve": "output",
+    "Conveyor_Motor": "output",
+    "Filling_Active": "output",
+    "Alarm_Overfill": "output",
+    "Alarm_No_Bottle": "output",
+    "System_Running": "local",
+    "Filling_Done": "local",
+    "TON1_IN": "local",
+    "TON1_Q": "local"
+  },
+  "inputs": [
+    "Start_Button",
+    "Stop_Button",
+    "Emergency_Stop",
+    "Bottle_Present",
+    "Level_Full",
+    "Conveyor_Ready"
+  ],
+  "outputs": [
+    "Fill_Valve",
+    "Conveyor_Motor",
+    "Filling_Active",
+    "Alarm_Overfill",
+    "Alarm_No_Bottle"
+  ],
+  "locals": [
+    "System_Running",
+    "Filling_Done",
+    "TON1_IN"
+  ],
+  "timers": [
+    {
+      "id": "TON1_Q",
+      "kind": "TON",
+      "pt": 2,
+      "in": "TON1_IN"
+    }
+  ]
+}

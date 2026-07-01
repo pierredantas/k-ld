@@ -1,0 +1,13 @@
+| beremiz_traffic_light__beremiz_traffic_light | graphical | SAFE | SAFE | yes |
+| bottle_filling__bottle_filling_safe | simple | SAFE | SAFE | yes |
+| bottle_filling__bottle_filling_unsafe | simple | UNSAFE(P1,P2,P4,P6) | UNSAFE | yes |
+| dimmer_light_control__dimmer_light_control | graphical | SAFE | SAFE | yes |
+| elevator__elevator_safe | simple | SAFE | SAFE | yes |
+| elevator__elevator_unsafe | simple | UNSAFE(P1,P2,P3,P4,P5,P6) | UNSAFE | yes |
+| stairs_light__stairs_light | graphical | UNSAFE(P1) | SAFE | **NO** |
+| tank_level_control__tank_level_control | simple | SAFE | SAFE | yes |
+| tank_level_control__tank_level_control_unsafe | simple | UNSAFE(P1,P2,P3) | UNSAFE | yes |
+| traffic_light__traffic_light | simple | SAFE | UNSAFE | **NO** |
+| traffic_light__traffic_light_safe | simple | SAFE | SAFE | yes |
+| traffic_light__traffic_light_unsafe | simple | SAFE | UNSAFE | **NO** |
+| water_control__water_control | graphical | SAFE | SAFE | yes |

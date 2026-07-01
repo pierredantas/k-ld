@@ -1,0 +1,2 @@
+no <trace> in krun output:
+

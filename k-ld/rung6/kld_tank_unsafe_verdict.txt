@@ -1,0 +1,6 @@
+# K-LD reachability: 4 states, 32 scans explored
+
+P2: VIOLATED  [!PUMP || !HIGH_SWITCH]  witness: AUTO_MODE=T, HIGH_SWITCH=T, LOW_SWITCH=T, Filling_Active=T, Draining_Active=T, PUMP=T, VALVE=T
+P3: VIOLATED  [!VALVE || !LOW_SWITCH]  witness: AUTO_MODE=T, HIGH_SWITCH=T, LOW_SWITCH=T, Filling_Active=T, Draining_Active=T, PUMP=T, VALVE=T
+P4: SAFE      [AUTO_MODE || !PUMP]
+P5: SAFE      [AUTO_MODE || !VALVE]

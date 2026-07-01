@@ -1,0 +1,107 @@
+% =====================================================================
+%  K-LD :: Discussion, Limitations & Future Work, Conclusion.
+% =====================================================================
+\providecommand{\kld}{\textsc{K-LD}}
+
+\section{Discussion}
+\label{sec:discussion}
+
+\paragraph{What an executable reference bought.} The central lesson of
+\S\ref{sec:e3} is not the raw count of discrepancies but \emph{how} they were
+settled. A disagreement between two verifiers, or between a verifier and a paper
+specification, is inconclusive: either side might be wrong, and neither can be run.
+Because \kld{} is \emph{executable} and validated against the very C that OpenPLC
+runs, each disagreement resolves to a concrete scan-level trace that shows which
+engine departs from \gls{iec}~61131-3---and OpenPLC then reproduces that trace as
+an independent third witness. An executable, standard-faithful semantics is thus
+not merely another checker but an \emph{arbiter}: it converts ``the tools disagree''
+into ``here is the scan on which the translation violates the standard.''
+
+\paragraph{Two failure modes, both practically serious.} \gls{esbmc}'s incomplete
+timer translation fails in opposite directions, and the distinction matters to an
+engineer. On graphical diagrams it \emph{skips} the timer path and can therefore
+certify as safe a program that in fact violates its own stated property---an
+\emph{unsound} outcome, the most dangerous kind for a safety tool, because the user
+receives a green light for a hazardous controller. On the simple format it instead
+\emph{havocs} the timer output and manufactures counterexamples that no real timer
+can produce---a false alarm that, while sound, erodes trust and wastes triage
+effort on impossible scenarios. Neither is visible from inside the tool: only an
+external account of what the diagram means can separate a true defect from a
+modelling artefact, which is precisely the role \kld{} plays.
+
+\paragraph{A layered correctness argument.} \kld{} supports a graded notion of
+assurance that we are careful to keep honest. The combinational and latch fragment
+is \emph{machine-checked} in \code{kprove} (\S\ref{sec:eval:rq4}); the timer and
+counter function blocks are \emph{execution-validated} scan-for-scan against the
+OpenPLC/\gls{matiec} reference (\S\ref{sec:eval:rq1}); and the end-to-end
+\gls{ld}$\rightarrow$GOTO translation is \emph{empirically validated} by the
+differential study (\S\ref{sec:e3}). Each layer is weaker than the one before but
+covers more, and together they close the \gls{esbmc}-\gls{plc} trust gap far more
+tightly than the prior state, in which the translation's fidelity rested only on
+its having been \emph{designed to match} an informal formalisation.
+
+\paragraph{Generality.} Nothing in the method is specific to \gls{esbmc}. \kld{} is
+a stand-alone reference interpreter for \gls{iec}~61131-3 \gls{ld}; the differential
+harness compares \emph{any} verifier's verdicts against \kld{}'s ground truth, and
+the two independent front-ends read the same PLCopen~XML the tools consume. The
+same instrument could scrutinise other \gls{ld} verifiers, regression-test a
+verifier's front-end across releases, or serve as the executable oracle in a
+conformance test suite for \gls{iec}~61131-3 tooling.
+
+\section{Limitations and Future Work}
+\label{sec:limits}
+
+\paragraph{Mechanisation boundary.} Our machine-checked lemmas cover the
+combinational and latch fragment. The timer and counter constructs are multi-scan
+properties whose proofs require induction over the input sequence, and the current
+scan-loop encoding is not discharged automatically by \code{kprove} (\S\ref{sec:eval:rq4}).
+Closing these lemmas---via an explicit list case-split lemma or a narrowing-friendly
+reformulation of the scan driver---would raise the whole fragment from
+execution-validated to machine-checked, and is the most direct extension of this
+work. A full, mechanised \kld{}$\leftrightarrow$GOTO equivalence would additionally
+require a formal semantics of \gls{esbmc}'s \gls{ir}; our differential approach
+deliberately trades that heavyweight goal for high, reproducible coverage.
+
+\paragraph{Bounded differential and presets.} Like the \gls{bmc} it validates, the
+differential is bounded: \textsc{safe} verdicts are safe-up-to-horizon. Where a
+benchmark left a timer preset unspecified we instantiated a fixed default, which
+affects \emph{when} a timer fires but not the existence of the reported
+discrepancies---each of which we tie to a preset-independent structural argument.
+Extending to unbounded guarantees (e.g.\ via $k$-induction over \kld{} itself) is
+future work.
+
+\paragraph{Coverage.} The graphical front-end handles the standard constructs
+(contacts, coils, \code{TON}/\code{TOF}/\code{TP}, \code{CTU}/\code{CTD},
+\code{R\_TRIG}/\code{F\_TRIG}); one non-standard block in a single benchmark and the
+Function Block Diagram body of another remain outside its scope. Broadening \kld{}
+towards the rest of \gls{iec}~61131-3---richer data types, and integration with the
+\kst{} Structured Text semantics for mixed-language projects---would widen the class
+of programs the oracle can adjudicate.
+
+\paragraph{Fault-injection study.} We validated the oracle's fidelity but did not
+yet quantify its \emph{sensitivity} by systematic mutation of the translation. A
+mutation analysis---measuring the fraction of injected front-end faults the
+differential detects---would complement the discrepancies found in the wild with a
+controlled measure of the oracle's discriminating power.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Automated verifiers for \gls{iec}~61131-3 Ladder Diagram are only as trustworthy as
+the unverified front-end that lowers a diagram into a model checker, yet that
+translation has had no independent, executable account of the standard against which
+to be checked. We presented \kld{}, an executable formal semantics of
+\gls{iec}~61131-3 \gls{ld} in the \textsf{K} framework, extending \kst{} to the
+graphical language and its function blocks, from which a single definition yields
+both an interpreter and a prover. We validated \kld{} scan-for-scan against the
+OpenPLC/\gls{matiec} reference implementations, used it as an independent oracle to
+differentially validate the \gls{esbmc}-\gls{plc} \gls{ld}$\rightarrow$GOTO
+translation---finding broad agreement, witnessed violations on every unsafe
+program, and three corroborated defects that fall into two opposite timer-handling
+failure modes---and machine-checked in \code{kprove} that \kld{}'s rules implement
+the standard's input/output relation for the combinational and latch fragment. The
+broader contribution is methodological: a verifier's front-end is trusted code, and
+an executable, standard-faithful reference semantics turns that trust into something
+one can test, adjudicate, and in part prove. \kld{} is a reusable instrument for
+doing so, and we hope it serves as an executable reference for \gls{iec}~61131-3
+\gls{ld} beyond the single verifier examined here.

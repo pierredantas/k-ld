@@ -1,0 +1,17 @@
+properties:
+
+  # A: Light implies the button is currently held. TRUE under a faithful timer
+  # (Light=T_Q, and TON holds Q only while IN=Btn is true). VIOLATED if the timer
+  # output is havoc'd (Q free while Btn low).
+  - id: A
+    kind: invariant
+    expression: "!Light || Btn"
+    description: "Light on implies button held (holds iff timer is modelled, not havoc)"
+
+  # B: Light must never turn on (deliberately wrong). VIOLATED under a faithful
+  # timer (Light does turn on after PT). SAFE if the timer path is ignored/skipped
+  # so the done-bit is stuck false.
+  - id: B
+    kind: absence
+    expression: "Light"
+    description: "Light never on (holds only if timer output is ignored/stuck false)"

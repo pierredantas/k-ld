@@ -1,0 +1,25 @@
+{
+  "kinds": {
+    "Btn": "input",
+    "Light": "output",
+    "T_IN": "local",
+    "T_Q": "local"
+  },
+  "inputs": [
+    "Btn"
+  ],
+  "outputs": [
+    "Light"
+  ],
+  "locals": [
+    "T_IN"
+  ],
+  "timers": [
+    {
+      "id": "T_Q",
+      "kind": "TON",
+      "pt": 2,
+      "in": "T_IN"
+    }
+  ]
+}

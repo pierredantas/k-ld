@@ -1,0 +1,35 @@
+{
+  "kinds": {
+    "stairs_light": "output",
+    "lights_buttons_state": "local",
+    "stairs_pir_sensor": "input",
+    "control_button_down": "input",
+    "control_button_up": "input"
+  },
+  "inputs": [
+    "stairs_pir_sensor",
+    "control_button_down",
+    "control_button_up"
+  ],
+  "outputs": [
+    "stairs_light"
+  ],
+  "locals": [
+    "lights_buttons_state",
+    "TOF0_Q",
+    "prev_control_button_down",
+    "prev_control_button_up",
+    "prev_stairs_pir_sensor",
+    "rise_control_button_down",
+    "rise_control_button_up",
+    "rise_stairs_pir_sensor"
+  ],
+  "timers": [
+    {
+      "id": "TOF0_Q",
+      "kind": "TOF",
+      "pt": 20,
+      "in": null
+    }
+  ]
+}

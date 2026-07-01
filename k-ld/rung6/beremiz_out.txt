@@ -1,0 +1,5 @@
+# K-LD bounded differential: 24 scans (4 input combos x 6 sweeps)
+
+P1: SAFE-up-to-bound  [absence: (GREEN_LIGHT && RED_LIGHT)]
+P2: SAFE-up-to-bound  [absence: (PEDESTRIAN_GREEN_LIGHT && GREEN_LIGHT)]
+P3: SAFE-up-to-bound  [invariant: !PEDESTRIAN_GREEN_LIGHT || PEDESTRIAN_RED_LIGHT || !GREEN_LIGHT]

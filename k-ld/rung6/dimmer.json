@@ -1,0 +1,47 @@
+{
+  "kinds": {
+    "Control_button": "input",
+    "Light_output": "output",
+    "Light_on_state": "local",
+    "Reset_state": "local",
+    "Flag_cicle": "local",
+    "Full_bright": "local"
+  },
+  "inputs": [
+    "Control_button"
+  ],
+  "outputs": [
+    "Light_output"
+  ],
+  "locals": [
+    "Light_on_state",
+    "Reset_state",
+    "Flag_cicle",
+    "Full_bright",
+    "CTU0_Q",
+    "None_Q",
+    "TOF0_Q",
+    "TP0_Q",
+    "prev_Control_button",
+    "rise_Control_button"
+  ],
+  "timers": [
+    {
+      "id": "TP0_Q",
+      "kind": "TP",
+      "pt": 2
+    },
+    {
+      "id": "TOF0_Q",
+      "kind": "TOF",
+      "pt": 2
+    }
+  ],
+  "counters": [
+    {
+      "id": "CTU0_Q",
+      "kind": "CTU",
+      "pv": 4
+    }
+  ]
+}

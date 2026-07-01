@@ -1,0 +1,35 @@
+name: Build paper
+
+# Compiles the K-LD paper (ACM/__main.tex) on every push/PR so LaTeX errors are
+# caught in CI. The PDF is kept only as a transient build artifact for checking
+# the compile -- it is NOT committed (see .gitignore) and NOT attached to any
+# release, so it never enters the Zenodo archive.
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX (ACM/__main.tex)
+        uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: ACM
+          root_file: __main.tex
+          # latexmk runs pdflatex + bibtex (ACM-Reference-Format) as needed.
+          latexmk_use_xelatex: false
+
+      - name: Upload PDF (transient build artifact, not part of any release)
+        uses: actions/upload-artifact@v4
+        with:
+          name: k-ld-paper
+          path: ACM/__main.pdf
+          if-no-files-found: error
+          retention-days: 14

@@ -1,0 +1,6 @@
+# K-LD reachability: 3 states, 24 scans explored
+
+P2: SAFE      [!PUMP || !HIGH_SWITCH]
+P3: SAFE      [!VALVE || !LOW_SWITCH]
+P4: SAFE      [AUTO_MODE || !PUMP]
+P5: SAFE      [AUTO_MODE || !VALVE]

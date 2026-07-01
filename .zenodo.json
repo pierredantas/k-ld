@@ -1,0 +1,13 @@
+{
+  "title": "K-LD: An Executable Formal Semantics of IEC 61131-3 Ladder Diagram",
+  "description": "Artifact for the K-LD paper: the K-framework executable semantics of IEC 61131-3 Ladder Diagram (k-ld/ld.k), the OpenPLC/MATIEC fidelity harness (k-ld/validation), the differential-oracle frontends and driver (k-ld/rung6), the kprove construct lemmas (k-ld/proof), and the paper sources (ACM/).",
+  "upload_type": "software",
+  "license": "MIT",
+  "creators": [
+    { "name": "Dantas, Pierre", "affiliation": "TODO", "orcid": "" }
+  ],
+  "keywords": [
+    "IEC 61131-3", "Ladder Diagram", "K framework", "executable semantics",
+    "PLC", "formal verification", "translation validation", "ESBMC", "OpenPLC"
+  ]
+}

@@ -1,0 +1,4 @@
+OTE(PUMP) := XIC(AUTO_MODE) * XIC(LOW_SWITCH) ;
+OTE(Filling_Active) := XIC(PUMP) ;
+OTE(VALVE) := XIC(AUTO_MODE) * XIC(HIGH_SWITCH) ;
+OTE(Draining_Active) := XIC(VALVE) ;

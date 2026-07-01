@@ -1,0 +1,55 @@
+{
+  "kinds": {
+    "SWITCH_BUTTON": "input",
+    "PEDESTRIAN_BUTTON": "input",
+    "RED_LIGHT": "output",
+    "ORANGE_LIGHT": "output",
+    "GREEN_LIGHT": "output",
+    "PEDESTRIAN_RED_LIGHT": "output",
+    "PEDESTRIAN_GREEN_LIGHT": "output",
+    "ALLOW_CARS": "local",
+    "WARN_CARS": "local",
+    "STOP_CARS": "local",
+    "ALLOW_PEDESTRIANS": "local",
+    "STOP_PEDESTRIANS": "local"
+  },
+  "inputs": [
+    "SWITCH_BUTTON",
+    "PEDESTRIAN_BUTTON"
+  ],
+  "outputs": [
+    "RED_LIGHT",
+    "ORANGE_LIGHT",
+    "GREEN_LIGHT",
+    "PEDESTRIAN_RED_LIGHT",
+    "PEDESTRIAN_GREEN_LIGHT"
+  ],
+  "locals": [
+    "ALLOW_CARS",
+    "WARN_CARS",
+    "STOP_CARS",
+    "ALLOW_PEDESTRIANS",
+    "STOP_PEDESTRIANS",
+    "R_TRIG0_Q",
+    "R_TRIG0_clk",
+    "R_TRIG1_Q",
+    "R_TRIG1_clk",
+    "TON1_Q",
+    "TON2_Q",
+    "prev_R_TRIG0",
+    "prev_R_TRIG1"
+  ],
+  "timers": [
+    {
+      "id": "TON1_Q",
+      "kind": "TON",
+      "pt": 2
+    },
+    {
+      "id": "TON2_Q",
+      "kind": "TON",
+      "pt": 2
+    }
+  ],
+  "counters": []
+}

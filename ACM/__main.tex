@@ -1,0 +1,37 @@
+%\documentclass[acmsmall,review,manuscript]{acmart}
+% TCPS uses double-anonymous review (since 1 Nov 2025): the `anonymous` option
+% suppresses author/affiliation/acks rendering in the submitted PDF.
+\documentclass[acmsmall, review, anonymous]{acmart}
+
+\input{0.metadata}
+
+\input{0.mypackages}
+
+\begin{document}
+
+\input{0.acronyms}
+
+\maketitle
+
+\glsresetall
+
+\input{_sec_text}
+
+% K-LD Evaluation section (draft). Remove the old ESBMC-Arduino body in
+% _sec_text.tex as the K-LD paper takes shape; this section is self-contained.
+\input{_sec_evaluation}
+
+% E3: differential validation of the LD->GOTO translation (RQ2/RQ3), with the
+% full three-engine results table and discrepancy taxonomy. Written from real
+% experimental data (rung6/results.md, rung6/FINDINGS.md).
+\input{_sec_e3}
+
+% Discussion, Limitations & Future Work, Conclusion.
+\input{_sec_disc}
+
+%\input{0.sec_ack}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{0.sample-base}
+
+\end{document}

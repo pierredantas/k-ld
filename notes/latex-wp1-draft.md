@@ -146,10 +146,10 @@ it is the reference oracle against which such a translation can be scrutinized, 
 ## What is claimed vs. what was run (for your own tracking)
 - **Ran, real tools:** MATIEC `iec2c`→C + CBMC 6.10 and NuSMV 2.6.0, both on the
   `Btn→TON→Light` probe — faithful ⇒ `A` safe (NuSMV unbounded), havoc ⇒ `A` violated.
-  Artifacts: `k-ld/rung8_wp1a/matiec_cbmc/`, `k-ld/rung9_wp1b/`.
+  Artifacts: `k-esbmc/rung8_wp1a/matiec_cbmc/`, `k-esbmc/rung9_wp1b/`.
 - **Not run (do not imply):** MATIEC-C+CBMC / NuSMV across all 13 benchmarks. The text says
   "on the controlled probe" and "the harness admits the same engines on the full suite" —
   keep that scoping.
 - **PLCverif/Arcade.PLC:** deliberately not claimed as used; if a reviewer asks about other
-  verifiers, the honest answer is in `k-ld/rung9_wp1b/PLCVERIF.md` (PLCverif is Siemens-only,
+  verifiers, the honest answer is in `k-esbmc/rung9_wp1b/PLCVERIF.md` (PLCverif is Siemens-only,
   Arcade.PLC defunct) — consider a one-line footnote in Related Work if you want it on record.

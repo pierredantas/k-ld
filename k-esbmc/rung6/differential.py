@@ -95,7 +95,7 @@ def main():
 
     prog_rel = os.path.relpath(os.path.abspath(prog), KLD)   # e.g. rung6/gen/foo.ld
     cmd = ["docker", "run", "--rm", "--platform", "linux/amd64",
-           "-v", f"{KLD}:/work", "k-ld:latest", "krun", f"/work/{prog_rel}",
+           "-v", f"{KLD}:/work", "k-esbmc:latest", "krun", f"/work/{prog_rel}",
            f"-cIMAGE={imap}", f"-cINPUTS={inlist}", f"-cTIMERS={tmap}",
            "-cDT=1", f"-cCOUNTERS={cmap}", "--output", "pretty"]
     out = subprocess.run(cmd, capture_output=True, text=True).stdout

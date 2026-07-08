@@ -12,7 +12,7 @@ gap the review flags (W5b, and the property-adequacy point behind W8).
 - `gen_family.py` — generator; emits the family + `coverage.md` from one spec list.
 - `family/` — **15 programs**, each a triple in the exact form the differential
   harness consumes:
-  - `<name>.ld` — K-ESBMC DSL (simple/rung format, per `k-ld/ld-syntax.k`)
+  - `<name>.ld` — K-ESBMC DSL (simple/rung format, per `k-esbmc/ld-syntax.k`)
   - `<name>.json` — `{ "kinds": { var: input|output|local } }`
   - `<name>.props.yaml` — properties (`invariant`/`absence` → `expression`;
     `mutual_exclusion` → `variables: [..]`)

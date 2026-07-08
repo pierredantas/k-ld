@@ -15,7 +15,7 @@ This repository is the **software artifact**. The paper is maintained separately
 ## What is here
 
 ```
-k-ld/
+k-esbmc/
 ├── ld-syntax.k, ld.k     # the K-ESBMC semantics: contacts, coils/latches, the scan
 │                         #   cycle, TON/TOF/TP, CTU/CTD, R_TRIG/F_TRIG
 ├── tests/, Makefile      # per-construct conformance tests (make d-test-*)
@@ -37,7 +37,7 @@ k-ld/
 
 ## Requirements
 
-- **Docker.** The K toolchain runs inside a container built from `k-ld/Dockerfile`,
+- **Docker.** The K toolchain runs inside a container built from `k-esbmc/Dockerfile`,
   so no host K/LaTeX install is needed. On Apple Silicon the amd64 image runs under
   emulation.
 - For the OpenPLC fidelity check, the `tuttas/openplc_v3` image is pulled
@@ -50,7 +50,7 @@ k-ld/
 ## Quick start
 
 ```bash
-cd k-ld
+cd k-esbmc
 make d-build          # build the K image and kompile the semantics
 make d-test-ton       # run a conformance test (on-delay timer)
 ```
@@ -59,7 +59,7 @@ make d-test-ton       # run a conformance test (on-delay timer)
 
 **RQ1 — fidelity vs OpenPLC/MATIEC** (self-contained; Docker only):
 ```bash
-cd k-ld
+cd k-esbmc
 make d-test-and d-test-latch d-test-ton d-test-tof d-test-tp d-test-ctu d-test-ctd
 bash validation/run.sh        # executes the MATIEC reference FBs and prints their
                               # traces; compare against the K-ESBMC traces above
@@ -67,7 +67,7 @@ bash validation/run.sh        # executes the MATIEC reference FBs and prints the
 
 **RQ2/RQ3 — the differential** (K-ESBMC side; the ESBMC side needs the external tool):
 ```bash
-cd k-ld/rung6
+cd k-esbmc/rung6
 python3 graphical2kld.py <bench>.ld gen/<bench>.json > gen/<bench>.ld   # translate
 python3 differential.py gen/<bench>.ld gen/<bench>.json <props>.yaml    # K-ESBMC verdict
 # run_all.py drives all benchmarks through both engines -> results.md
@@ -76,7 +76,7 @@ cat results.md FINDINGS.md
 
 **RQ4 — machine-checked lemmas**:
 ```bash
-cd k-ld
+cd k-esbmc
 make d-prove          # kprove the 7 combinational/latch construct lemmas -> #Top
 ```
 
@@ -101,7 +101,7 @@ its verdict against **any** verifier (not just ESBMC). For a PLCopen XML diagram
 `absence` / `mutual_exclusion` kinds, as in the benchmarks):
 
 ```bash
-cd k-ld/rung6
+cd k-esbmc/rung6
 # 1. Translate the diagram into K-ESBMC DSL. Pick the frontend by format:
 #    graphical netlist -> graphical2kld.py ; linear <rung> format -> plcopen2kld.py
 python3 graphical2kld.py mydiagram.ld gen/mydiagram.json > gen/mydiagram.ld

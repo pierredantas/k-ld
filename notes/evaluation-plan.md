@@ -17,8 +17,8 @@ Each work package (WP) closes a named weakness from the peer review (`tosem-revi
 | **WP4a** | W7 | Horizon-scaling + sequence-dependent violations | S | P2 |
 | **WP4b** | W3 | Second-runtime cross-check (break the shared MATIEC ground truth) | S | P2 |
 
-Where the work lands in the repo: `k-ld/validation` (RQ1), `k-ld/rung6` (E3 differential),
-`k-ld/rung7` (E4 fault injection), `k-ld/proof` (RQ4), and the new `k-ld/rung8_wp1a` (WP1a).
+Where the work lands in the repo: `k-esbmc/validation` (RQ1), `k-esbmc/rung6` (E3 differential),
+`k-esbmc/rung7` (E4 fault injection), `k-esbmc/proof` (RQ4), and the new `k-esbmc/rung8_wp1a` (WP1a).
 
 ---
 
@@ -34,7 +34,7 @@ K-ESBMC (MATIEC models timers faithfully), so RQ3 becomes "corroborated by **two
 engines plus the runtime tie-breaker" instead of one oracle. Almost no new tooling: the
 compile path already exists in the container.
 
-**Status (this repo). Executed end-to-end with real tools** in `k-ld/rung8_wp1a`:
+**Status (this repo). Executed end-to-end with real tools** in `k-esbmc/rung8_wp1a`:
 - `gen_cbmc_harness.py` / `gen_bindings_stub.py` — verifier-independent harness + bindings
   generators. Validated locally.
 - `matiec_cbmc/` — **real `iec2c` (built from `thiagoralves/matiec`) → real MATIEC-generated
@@ -65,13 +65,13 @@ the tool under test."*
 **What actually happened.** Neither third-party tool was usable: **PLCverif's only PLC
 front-end is Siemens Step7 (SCL/STL)** — it cannot ingest our PLCopen XML LD without an
 LD→STL translator (another trusted front-end, defeating the point); **Arcade.PLC is no longer
-distributed** (tool page 404). Documented in `k-ld/rung9_wp1b/PLCVERIF.md`.
+distributed** (tool page 404). Documented in `k-esbmc/rung9_wp1b/PLCVERIF.md`.
 
 **Fallback executed.** An independent *engine*: **NuSMV** (BDD symbolic model checking) on the
 timer probe. Faithful scan-TON → invariant `Light → Btn` **true** (proved, **unbounded**);
 havoc → **false** with counterexample. So three engines — K-ESBMC (reachability), MATIEC-C+CBMC
 (SAT-BMC, WP1a), NuSMV (BDD, WP1b) — agree against ESBMC, and NuSMV's unbounded proof also
-buys down the bounded-horizon threat (W7). Implemented in `k-ld/rung9_wp1b/`.
+buys down the bounded-horizon threat (W7). Implemented in `k-esbmc/rung9_wp1b/`.
 
 **Honest boundary.** Independent *engine*, not independent *front-end*: it rules out a
 BMC-specific artifact but does not test another tool's timer handling. A third-party LD
@@ -97,7 +97,7 @@ not raw N).
 **Deliverable.** A coverage table (programs × {contacts, latch, TON/TOF/TP, CTU/CTD, edge,
 format, property-kind}) proving systematic — not lucky — coverage.
 
-**Status — done (synthetic family).** Implemented in `k-ld/rung10_wp2/`: a generator
+**Status — done (synthetic family).** Implemented in `k-esbmc/rung10_wp2/`: a generator
 (`gen_family.py`) emits **15 programs** (corpus 13 → 28) as `.ld`/`.json`/`.props.yaml`
 triples in the harness's format, plus `coverage.md` — the programs × constructs ×
 property-kinds matrix (every construct column ≥1 program; all three property kinds; 13
@@ -124,7 +124,7 @@ Current study (`rung7`): 2 benchmarks, 60 mutants, latch operator never fires, t
 3. **Report per-operator detection rates** over hundreds of mutants with confidence intervals.
    The 27% figure becomes a defensible curve, not an anecdote.
 
-**Status — done (fix 1 + fix 3).** Implemented in `k-ld/rung11_wp3/`: rung7's five operators
+**Status — done (fix 1 + fix 3).** Implemented in `k-esbmc/rung11_wp3/`: rung7's five operators
 run over the WP2 family → **87 mutants**, with per-operator detection (`RESULTS.md`). The
 previously-inert operators now fire — **LR 4× (was 0), TK 5× (was 1)**. Property-adequacy gap
 confirmed: 73 behavior-changing mutants, only 44% property-detected (27% on the real

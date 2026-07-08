@@ -14,7 +14,7 @@ MAIN    ?= ld.k
 KOMPILED = ld-kompiled
 
 # ---- Docker wrappers (path B) ---------------------------------------------
-IMAGE     ?= k-ld:latest
+IMAGE     ?= k-esbmc:latest
 PLATFORM  ?= linux/amd64
 DOCKER_RUN = docker run --rm --platform $(PLATFORM) -v "$(CURDIR)":/work $(IMAGE)
 

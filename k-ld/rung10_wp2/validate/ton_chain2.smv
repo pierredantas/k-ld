@@ -1,0 +1,16 @@
+-- Independent NuSMV check of family/ton_chain2 (mutual_exclusion, expected SAFE).
+-- Two faithful scan-TONs (PT=2); P1/P2 are structurally disjoint (XIO/XIC of T1).
+MODULE main
+VAR Enable : boolean; et1 : 0..2; et2 : 0..2;
+DEFINE
+  PT := 2;
+  et1c := case !Enable : 0; et1 < PT : et1+1; TRUE : et1; esac;
+  T1   := et1c >= PT;
+  et2c := case !T1 : 0; et2 < PT : et2+1; TRUE : et2; esac;
+  T2   := et2c >= PT;
+  P1   := Enable & !T1;
+  P2   := T1 & !T2;
+ASSIGN
+  init(et1):=0; next(et1):=et1c;
+  init(et2):=0; next(et2):=et2c;
+INVARSPEC !(P1 & P2);

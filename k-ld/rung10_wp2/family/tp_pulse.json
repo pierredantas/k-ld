@@ -1,0 +1,7 @@
+{
+  "kinds": {
+    "Trig": "input",
+    "Out": "output",
+    "TP0_Q": "local"
+  }
+}

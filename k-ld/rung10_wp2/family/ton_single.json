@@ -1,0 +1,7 @@
+{
+  "kinds": {
+    "Btn": "input",
+    "Light": "output",
+    "TON0_Q": "local"
+  }
+}

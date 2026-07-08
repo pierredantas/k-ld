@@ -12,7 +12,7 @@ Each work package (WP) closes a named weakness from the peer review (`tosem-revi
 | --- | --- | --- | --- | --- |
 | **WP1a** | W5 | Second verification path: MATIEC-C + CBMC | S | **P0 (executed, real tools)** |
 | **WP1b** | W5, W7 | Independent engine: NuSMV (BDD). PLCverif ruled out (Siemens-only), Arcade.PLC defunct | M | **P0 (executed, NuSMV)** |
-| **WP2** | W5b | Grow + *characterize* the benchmark corpus (13 → ~35–45) | M | **P1** |
+| **WP2** | W5b | Grow + *characterize* the benchmark corpus (13 → 28, synthetic family) | M | **P1 (done: family + coverage matrix, labels NuSMV-checked)** |
 | **WP3** | W8 | Real fault-injection campaign (fix inert operators; mutate the translator) | M | **P1** |
 | **WP4a** | W7 | Horizon-scaling + sequence-dependent violations | S | P2 |
 | **WP4b** | W3 | Second-runtime cross-check (break the shared MATIEC ground truth) | S | P2 |
@@ -96,6 +96,16 @@ not raw N).
 
 **Deliverable.** A coverage table (programs × {contacts, latch, TON/TOF/TP, CTU/CTD, edge,
 format, property-kind}) proving systematic — not lucky — coverage.
+
+**Status — done (synthetic family).** Implemented in `k-ld/rung10_wp2/`: a generator
+(`gen_family.py`) emits **15 programs** (corpus 13 → 28) as `.ld`/`.json`/`.props.yaml`
+triples in the harness's format, plus `coverage.md` — the programs × constructs ×
+property-kinds matrix (every construct column ≥1 program; all three property kinds; 13
+safe / 2 unsafe-under-faithful-timer). Ready to run through `rung6/differential.py` under K.
+Labels independently confirmed for three representative members (one per property kind,
+both verdicts) with real NuSMV (`validate/`): `ton_chain2` safe, `tof_hold` unsafe,
+`ctu_saturate` safe — all matched. Not yet done: external real-world corpus (OSCAT/PLCopen/
+MATIEC suite) and graphical-format variants — mechanical follow-ups.
 
 ---
 

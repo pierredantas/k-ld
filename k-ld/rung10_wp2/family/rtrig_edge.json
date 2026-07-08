@@ -1,0 +1,8 @@
+{
+  "kinds": {
+    "Sig": "input",
+    "OneShot": "output",
+    "Rise": "local",
+    "Sig_prev": "local"
+  }
+}

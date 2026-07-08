@@ -1,0 +1,8 @@
+{
+  "kinds": {
+    "Trig": "input",
+    "Ack": "input",
+    "Alarm": "output",
+    "T0": "local"
+  }
+}

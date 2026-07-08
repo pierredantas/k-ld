@@ -1,0 +1,9 @@
+{
+  "kinds": {
+    "Enable": "input",
+    "P1": "output",
+    "P2": "output",
+    "T1": "local",
+    "T2": "local"
+  }
+}

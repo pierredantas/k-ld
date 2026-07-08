@@ -1,0 +1,8 @@
+{
+  "kinds": {
+    "Pulse": "input",
+    "Reset": "input",
+    "Done": "output",
+    "CTU0_Q": "local"
+  }
+}

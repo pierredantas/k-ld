@@ -1,0 +1,4 @@
+properties:
+  - id: A1
+    kind: invariant
+    expression: "!Y || (A && B && C)"

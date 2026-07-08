@@ -1,0 +1,7 @@
+{
+  "kinds": {
+    "Start": "input",
+    "Stop": "input",
+    "Run": "output"
+  }
+}

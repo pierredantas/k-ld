@@ -1,0 +1,4 @@
+properties:
+  - id: MX
+    kind: mutual_exclusion
+    variables: [P1, P2]

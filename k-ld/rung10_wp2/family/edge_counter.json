@@ -1,0 +1,10 @@
+{
+  "kinds": {
+    "Sig": "input",
+    "Reset": "input",
+    "Full": "output",
+    "Rise": "local",
+    "Sig_prev": "local",
+    "Cnt_Q": "local"
+  }
+}

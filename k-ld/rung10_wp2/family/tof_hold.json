@@ -1,0 +1,8 @@
+{
+  "kinds": {
+    "Pir": "input",
+    "Button": "input",
+    "Light": "output",
+    "TOF0_Q": "local"
+  }
+}

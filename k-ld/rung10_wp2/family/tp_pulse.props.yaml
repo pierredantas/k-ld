@@ -1,0 +1,4 @@
+properties:
+  - id: P1
+    kind: invariant
+    expression: "!Out || Trig"

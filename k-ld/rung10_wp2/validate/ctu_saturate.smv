@@ -1,0 +1,13 @@
+-- Independent NuSMV check of family/ctu_saturate (absence, expected SAFE).
+-- Faithful CTU (PV=2), reset dominant -> Done & Reset never co-hold.
+MODULE main
+VAR Pulse : boolean; Reset : boolean; pprev : boolean; cv : 0..2;
+DEFINE
+  PV   := 2;
+  rise := Pulse & !pprev;
+  cvc  := case Reset : 0; rise & cv < PV : cv+1; TRUE : cv; esac;
+  Done := cvc >= PV;
+ASSIGN
+  init(cv):=0;    next(cv):=cvc;
+  init(pprev):=FALSE; next(pprev):=Pulse;
+INVARSPEC !(Done & Reset);

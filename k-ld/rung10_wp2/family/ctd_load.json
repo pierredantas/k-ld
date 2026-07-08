@@ -1,0 +1,8 @@
+{
+  "kinds": {
+    "Pulse": "input",
+    "Load": "input",
+    "Empty": "output",
+    "CTD0_Q": "local"
+  }
+}

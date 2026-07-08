@@ -1,0 +1,4 @@
+properties:
+  - id: A1
+    kind: absence
+    expression: "Done && Reset"

@@ -1,0 +1,8 @@
+{
+  "kinds": {
+    "A": "input",
+    "B": "input",
+    "C": "input",
+    "Y": "output"
+  }
+}

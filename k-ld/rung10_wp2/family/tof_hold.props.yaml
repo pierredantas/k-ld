@@ -1,0 +1,4 @@
+properties:
+  - id: P1
+    kind: invariant
+    expression: "!Light || Pir || Button"

@@ -1,0 +1,12 @@
+-- Independent NuSMV check of family/tof_hold (invariant P1, expected UNSAFE).
+-- Faithful off-delay (PT=5): Light stays on after Pir clears -> P1 violated.
+MODULE main
+VAR Pir : boolean; Button : boolean; et : 0..5;
+DEFINE
+  PT    := 5;
+  Q     := Pir | (et < PT);
+  Light := Q | Button;
+ASSIGN
+  init(et):=PT;
+  next(et):= case Pir : 0; et < PT : et+1; TRUE : PT; esac;
+INVARSPEC (Light -> (Pir | Button));

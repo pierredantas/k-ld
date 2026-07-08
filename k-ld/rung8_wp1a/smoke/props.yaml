@@ -1,0 +1,9 @@
+properties:
+  # A: Light on implies button held. SAFE under a faithful TON, VIOLATED under havoc.
+  - id: A
+    kind: invariant
+    expression: "!Light || Btn"
+  # B: Light never on (deliberately wrong). VIOLATED under a faithful TON.
+  - id: B
+    kind: absence
+    expression: "Light"

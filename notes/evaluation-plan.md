@@ -13,7 +13,7 @@ Each work package (WP) closes a named weakness from the peer review (`tosem-revi
 | **WP1a** | W5 | Second verification path: MATIEC-C + CBMC | S | **P0 (executed, real tools)** |
 | **WP1b** | W5, W7 | Independent engine: NuSMV (BDD). PLCverif ruled out (Siemens-only), Arcade.PLC defunct | M | **P0 (executed, NuSMV)** |
 | **WP2** | W5b | Grow + *characterize* the benchmark corpus (13 → 28, synthetic family) | M | **P1 (done: family + coverage matrix, labels NuSMV-checked)** |
-| **WP3** | W8 | Real fault-injection campaign (fix inert operators; mutate the translator) | M | **P1** |
+| **WP3** | W8 | Fault-injection over the WP2 family: inert operators now fire; per-operator rates | M | **P1 (done: 87 mutants, LR/TK firing, oracle RQ1+NuSMV-validated)** |
 | **WP4a** | W7 | Horizon-scaling + sequence-dependent violations | S | P2 |
 | **WP4b** | W3 | Second-runtime cross-check (break the shared MATIEC ground truth) | S | P2 |
 
@@ -123,6 +123,16 @@ Current study (`rung7`): 2 benchmarks, 60 mutants, latch operator never fires, t
    (mutation testing of a translation).
 3. **Report per-operator detection rates** over hundreds of mutants with confidence intervals.
    The 27% figure becomes a defensible curve, not an anecdote.
+
+**Status — done (fix 1 + fix 3).** Implemented in `k-ld/rung11_wp3/`: rung7's five operators
+run over the WP2 family → **87 mutants**, with per-operator detection (`RESULTS.md`). The
+previously-inert operators now fire — **LR 4× (was 0), TK 5× (was 1)**. Property-adequacy gap
+confirmed: 73 behavior-changing mutants, only 44% property-detected (27% on the real
+benchmarks) — even properties *designed to observe* the construct miss most faults. Measured
+with `ld_exec`, a faithful scan-cycle executor **validated** against the RQ1 reference traces
+(Table 2) and the WP2 labels, and agreeing with NuSMV on three members (`validate_exec.py`);
+the canonical run is `differential.py` under K. **Fix 2** (mutate ESBMC's LD→GOTO code itself)
+needs the ESBMC toolchain and remains future work.
 
 ---
 

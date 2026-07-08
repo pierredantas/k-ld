@@ -1,7 +1,7 @@
 /* Dynamic OpenPLC ground-truth harness: drives MATIEC's reference FB bodies
  * (the exact code OpenPLC runs) with controlled __CURRENT_TIME and the SAME
- * input traces as the K-LD tests, then prints the Q trace for diffing.
- * Time unit = seconds; Delta t = 1 s per scan, PT = 3 s  (maps to K-LD DT=1,PT=3).
+ * input traces as the K-ESBMC tests, then prints the Q trace for diffing.
+ * Time unit = seconds; Delta t = 1 s per scan, PT = 3 s  (maps to K-ESBMC DT=1,PT=3).
  * NOTE: FB instances are zero-initialised ({0}) so the .flags field is clear --
  * exactly as OpenPLC instantiates them as zeroed globals. Uninitialised stack
  * garbage in .flags can set the FORCE bit and make __SET_VAR silently skip.

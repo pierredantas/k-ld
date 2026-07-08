@@ -1,4 +1,4 @@
--- Faithful scan-TON (K-LD semantics): elapsed resets when IN low, so the done
+-- Faithful scan-TON (K-ESBMC semantics): elapsed resets when IN low, so the done
 -- bit Q can only be high while Btn is high this scan. Property A: Light -> Btn.
 MODULE main
 VAR

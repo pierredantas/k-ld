@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 E4 mutation driver. For one benchmark:
-  1. run the K-LD differential on the original program -> baseline verdict vector
+  1. run the K-ESBMC differential on the original program -> baseline verdict vector
      (per property: S = safe-to-bound, V = violated);
   2. generate all single-point mutants (mutate.py);
   3. run the differential on each mutant; a mutant is KILLED iff its verdict vector

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Dynamic ground-truth check: run OpenPLC/MATIEC's reference FB bodies and diff
-# against K-LD. Extracts the MATIEC lib/C headers from the OpenPLC container at
+# against K-ESBMC. Extracts the MATIEC lib/C headers from the OpenPLC container at
 # runtime (so we don't redistribute GPL sources), compiles matiec_ref.c against
 # them, and prints the executed Q traces. Compare with `make d-test-*` in ../.
 #
@@ -23,7 +23,7 @@ docker run --rm --platform linux/amd64 -v "$work":/w -w /w gcc:13 \
 
 cat <<'EOF'
 
->> Expected K-LD traces (from ../Makefile d-test-*), for comparison:
+>> Expected K-ESBMC traces (from ../Makefile d-test-*), for comparison:
    TON: F,F,F,T,F     TOF: T,T,T,T,T,F     TP:  F,T,T,T,F,T
    CTU: F,F,F,F,T,F,F CTD: F,F,F,F,T,T,F
 EOF

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 graphical2kld -- automated frontend for the GRAPHICAL PLCopen LD format
-(power rails + contacts/coils/blocks wired by localId/refLocalId), producing K-LD
+(power rails + contacts/coils/blocks wired by localId/refLocalId), producing K-ESBMC
 DSL + a JSON sidecar. Complements plcopen2kld.py (which handles the simple <rung>
 format).
 
@@ -189,7 +189,7 @@ class G:
                 return parse_time(tgt.findtext('expression'), default)
         return default
 
-    # ---- build the K-LD program ---------------------------------------------
+    # ---- build the K-ESBMC program ---------------------------------------------
     def build(self):
         logic = []      # (sort-key, line)
         fb_post = []    # postlude lines for edge-FB prev updates

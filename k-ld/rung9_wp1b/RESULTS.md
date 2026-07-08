@@ -14,7 +14,7 @@ On the timer probe, property A (`Light → Btn`, i.e. `!Light || Btn`):
 | Engine | Algorithm | Faithful timer | Havoc timer |
 | --- | --- | --- | --- |
 | ESBMC-PLC | SMT-BMC (simple fmt) | — | **FAILED** (false alarm) |
-| K-LD | reachability oracle | SAFE | VIOLATED |
+| K-ESBMC | reachability oracle | SAFE | VIOLATED |
 | MATIEC-C + CBMC (WP1a) | SAT-BMC | SUCCESSFUL | FAILED |
 | **NuSMV (WP1b)** | **BDD symbolic (unbounded)** | **true** | **false** |
 

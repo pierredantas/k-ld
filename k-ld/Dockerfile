@@ -1,4 +1,4 @@
-# K-LD toolchain image: the K framework (v7.1.x) on Ubuntu Noble.
+# K-ESBMC toolchain image: the K framework (v7.1.x) on Ubuntu Noble.
 # amd64-only .deb, run under emulation on Apple Silicon (--platform linux/amd64).
 # Doubles as the artifact-evaluation image for the paper.
 FROM --platform=linux/amd64 ubuntu:24.04

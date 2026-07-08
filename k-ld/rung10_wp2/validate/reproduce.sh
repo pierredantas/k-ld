@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Independent NuSMV cross-check of the WP2 family's *expected verdicts*.
-# K-LD (krun) is the primary oracle for the family; these NuSMV encodings are an
+# K-ESBMC (krun) is the primary oracle for the family; these NuSMV encodings are an
 # independent confirmation that the labels in ../coverage.md are correct, across
 # all three property kinds and both verdicts:
 #   ton_chain2   (mutual_exclusion, safe)   -> invariant true

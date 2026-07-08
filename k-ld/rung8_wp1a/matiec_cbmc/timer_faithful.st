@@ -1,5 +1,5 @@
 (* Faithful scan-counting TON: fires after PT scans of continuous IN, drops when
-   IN low -- the exact standard/K-LD state machine, PT counted in scans. *)
+   IN low -- the exact standard/K-ESBMC state machine, PT counted in scans. *)
 FUNCTION_BLOCK TON_scan
   VAR_INPUT IN : BOOL; PT : INT; END_VAR
   VAR_OUTPUT Q : BOOL; END_VAR

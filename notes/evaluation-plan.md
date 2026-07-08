@@ -1,4 +1,4 @@
-# K-LD — Evaluation-Broadening Plan (TOSEM)
+# K-ESBMC — Evaluation-Broadening Plan (TOSEM)
 
 **Goal.** Convert the paper's weakest dimension — a differential built on a *single*,
 in-group verifier over 13 programs — into a strength, so the central methodological claim
@@ -25,12 +25,12 @@ Where the work lands in the repo: `k-ld/validation` (RQ1), `k-ld/rung6` (E3 diff
 ## WP1a — MATIEC-C + CBMC as an independent second verifier  · kills W5 · **prototyped**
 
 **What.** Add the path `PLCopen XML --[MATIEC iec2c]--> C --[CBMC]--> SAFE/VIOLATED`. MATIEC's
-LD→C lowering differs from **both** ESBMC-PLC's LD→GOTO and K-LD's `plcopen2kld.py`, so it is
+LD→C lowering differs from **both** ESBMC-PLC's LD→GOTO and K-ESBMC's `plcopen2kld.py`, so it is
 an independent second opinion — and reuses the *same* OpenPLC container RQ1 already trusts
 (`validation/run.sh`), adding no new trusted component.
 
 **Why it's high-value / low-cost.** On the three disagreements MATIEC-C+CBMC should side with
-K-LD (MATIEC models timers faithfully), so RQ3 becomes "corroborated by **two** independent
+K-ESBMC (MATIEC models timers faithfully), so RQ3 becomes "corroborated by **two** independent
 engines plus the runtime tie-breaker" instead of one oracle. Almost no new tooling: the
 compile path already exists in the container.
 
@@ -39,12 +39,12 @@ compile path already exists in the container.
   generators. Validated locally.
 - `matiec_cbmc/` — **real `iec2c` (built from `thiagoralves/matiec`) → real MATIEC-generated
   C → real CBMC 6.10**: faithful scan-TON proves property A **SUCCESSFUL** (siding with
-  K-LD); havoc timer → property A **FAILED** (the ESBMC false alarm). See
+  K-ESBMC); havoc timer → property A **FAILED** (the ESBMC false alarm). See
   `matiec_cbmc/RESULTS.md`. The mechanism is demonstrated on genuine MATIEC codegen.
 - `smoke/` — the same result under real CBMC on the paper's probe, isolating the harness core.
 
 **Remaining to land it on the paper's benchmarks (needs Docker + original XML):**
-1. Obtain the original **PLCopen XML** benchmarks (the repo's `.ld` are already K-LD DSL).
+1. Obtain the original **PLCopen XML** benchmarks (the repo's `.ld` are already K-ESBMC DSL).
 2. Run `run_wp1a.sh` (container `iec2c`, which loads the standard-FB library so the wall-clock
    `TON` body is used — a local bison-3.x `iec2c` does not load that library; the
    `matiec_cbmc/` demo therefore expresses the timer as the equivalent scan-counting ST).
@@ -69,7 +69,7 @@ distributed** (tool page 404). Documented in `k-ld/rung9_wp1b/PLCVERIF.md`.
 
 **Fallback executed.** An independent *engine*: **NuSMV** (BDD symbolic model checking) on the
 timer probe. Faithful scan-TON → invariant `Light → Btn` **true** (proved, **unbounded**);
-havoc → **false** with counterexample. So three engines — K-LD (reachability), MATIEC-C+CBMC
+havoc → **false** with counterexample. So three engines — K-ESBMC (reachability), MATIEC-C+CBMC
 (SAT-BMC, WP1a), NuSMV (BDD, WP1b) — agree against ESBMC, and NuSMV's unbounded proof also
 buys down the bounded-horizon threat (W7). Implemented in `k-ld/rung9_wp1b/`.
 
@@ -77,7 +77,7 @@ buys down the bounded-horizon threat (W7). Implemented in `k-ld/rung9_wp1b/`.
 BMC-specific artifact but does not test another tool's timer handling. A third-party LD
 verifier remains the strongest future extension; the harness is ready to accept its verdicts.
 
-**Deliverable.** Extend Table 3 to a multi-engine matrix (columns = ESBMC-PLC / K-LD /
+**Deliverable.** Extend Table 3 to a multi-engine matrix (columns = ESBMC-PLC / K-ESBMC /
 MATIEC-C+CBMC / NuSMV / OpenPLC-tiebreak).
 
 ---
@@ -117,7 +117,7 @@ Current study (`rung7`): 2 benchmarks, 60 mutants, latch operator never fires, t
 1. **Feed the inert operators** — include latch-heavy and timer-heavy programs (draw from
    WP2) so all five operators fire across many mutants.
 2. **Stronger variant — mutate the *translator*, not the diagram.** Inject single-point faults
-   into ESBMC-PLC's LD→GOTO code (or the front-ends) and measure the fraction K-LD's
+   into ESBMC-PLC's LD→GOTO code (or the front-ends) and measure the fraction K-ESBMC's
    whole-behavior oracle catches vs. the fraction the shipped property suites catch. This is a
    far sharper statement of the property-adequacy gap and is squarely TOSEM-flavored
    (mutation testing of a translation).

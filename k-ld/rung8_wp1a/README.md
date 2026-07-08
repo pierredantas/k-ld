@@ -9,10 +9,10 @@ WP1a adds a **second, independent verification path** over the same benchmarks:
 PLCopen XML --[MATIEC: iec2c]--> C --[CBMC]--> SAFE / VIOLATED
 ```
 
-MATIEC's LD→C lowering is different from **both** ESBMC-PLC's LD→GOTO **and** K-LD's
+MATIEC's LD→C lowering is different from **both** ESBMC-PLC's LD→GOTO **and** K-ESBMC's
 `plcopen2kld.py`. So a verdict from this path is a genuinely independent second
 opinion — and, because MATIEC models timers faithfully, on the three known
-disagreements it is expected to **side with K-LD**, converting "our oracle says so"
+disagreements it is expected to **side with K-ESBMC**, converting "our oracle says so"
 into "an independent MATIEC+CBMC engine says so too." It reuses the *exact* OpenPLC
 container the RQ1 validation already pulls MATIEC from (`../validation/run.sh`), so it
 adds no new trusted component.
@@ -37,7 +37,7 @@ from source):**
   **VERIFICATION SUCCESSFUL** (proved, loop fully unwound); havoc timer → property A
   **VERIFICATION FAILED** (the ESBMC false alarm). See `matiec_cbmc/RESULTS.md`. This is
   WP1a's claim on genuine MATIEC codegen, not a hand model — two independent engines
-  (K-LD and MATIEC-C+CBMC) agree against ESBMC.
+  (K-ESBMC and MATIEC-C+CBMC) agree against ESBMC.
 - **`smoke/` — the harness-core check** on the paper's probe, run under **real CBMC**:
   faithful model → `prop A: SUCCESS`; havoc model → `prop A: FAILURE`. Confirms the
   generator's property compilation is sound independently of MATIEC.
@@ -57,7 +57,7 @@ Reproduce the real MATIEC path: see `matiec_cbmc/RESULTS.md`.
 **Still needs Docker + the original benchmarks (the remaining integration work):**
 
 1. **The PLCopen XML sources.** The `.ld` files vendored in `../rung6` are already
-   *K-LD DSL*; `run_wp1a.sh` needs the **original PLCopen XML** ESBMC consumes (from the
+   *K-ESBMC DSL*; `run_wp1a.sh` needs the **original PLCopen XML** ESBMC consumes (from the
    ESBMC-PLC benchmark repo). Drop them in and pass the path.
 2. **The XML→ST→C step for graphical LD.** `iec2c` compiles textual IEC; a graphical LD
    body is turned into ST by OpenPLC's editor/build step. `run_wp1a.sh` invokes OpenPLC's
@@ -76,10 +76,10 @@ Reproduce the real MATIEC path: see `matiec_cbmc/RESULTS.md`.
 Start with the two decisive benchmarks so the payoff is immediate:
 
 - `traffic_light` (havoc false alarm) — expect MATIEC-C+CBMC = **SAFE**, agreeing with
-  K-LD against ESBMC's spurious counterexample.
+  K-ESBMC against ESBMC's spurious counterexample.
 - `stairs_light` (skip / missed bug) — expect MATIEC-C+CBMC = **VIOLATED**, agreeing with
-  K-LD against ESBMC's unsound `SUCCESSFUL`.
+  K-ESBMC against ESBMC's unsound `SUCCESSFUL`.
 
 Two agreements there would let the paper report the three disagreements as corroborated by
-**two** independent engines (K-LD *and* MATIEC-C+CBMC) plus the OpenPLC runtime tie-breaker
+**two** independent engines (K-ESBMC *and* MATIEC-C+CBMC) plus the OpenPLC runtime tie-breaker
 — a materially stronger RQ3.

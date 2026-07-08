@@ -1,5 +1,5 @@
 // ============================================================================
-//  K-LD :: ld-proof.k
+//  K-ESBMC :: ld-proof.k
 //  Proof-harness module: concrete identifier tokens and helper functions used by
 //  the kprove specifications (proof/*.k). Kept out of the semantics (ld.k) so the
 //  interpreter build is unaffected; kompiled with the Haskell backend for kprove.

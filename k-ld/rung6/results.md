@@ -1,6 +1,6 @@
 # Rung 6 — three-engine results
 
-| Benchmark | Fmt | K-LD | ESBMC | Agree |
+| Benchmark | Fmt | K-ESBMC | ESBMC | Agree |
 |---|---|---|---|---|
 | beremiz_traffic_light__beremiz_traffic_light | graphical | SAFE | SAFE | yes |
 | bottle_filling__bottle_filling_safe | simple | SAFE | SAFE | yes |

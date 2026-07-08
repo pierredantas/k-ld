@@ -3,7 +3,7 @@
 WP1a harness generator  --  MATIEC-C + CBMC as an independent second verifier.
 
 Reads a benchmark's variable-classification sidecar (<prog>.json, the same
-in/out/local map K-LD's front-end emits) and its property file (props.yaml),
+in/out/local map K-ESBMC's front-end emits) and its property file (props.yaml),
 and emits a *tool-agnostic* C harness that:
 
   * declares one bounded scan loop of N cycles,

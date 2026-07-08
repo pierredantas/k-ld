@@ -7,10 +7,10 @@
 #
 #     PLCopen XML --[MATIEC: iec2c]--> C --[CBMC]--> SAFE / VIOLATED
 #
-# MATIEC's LD->C lowering is different from BOTH ESBMC-PLC's LD->GOTO AND K-LD's
+# MATIEC's LD->C lowering is different from BOTH ESBMC-PLC's LD->GOTO AND K-ESBMC's
 # plcopen2kld.py, so agreement/disagreement here is a genuinely independent
 # second opinion. On the three known disagreements this path is expected to side
-# with K-LD (MATIEC models timers faithfully), turning "our oracle says so" into
+# with K-ESBMC (MATIEC models timers faithfully), turning "our oracle says so" into
 # "an independent MATIEC+CBMC engine says so too".
 #
 # It reuses the exact container the RQ1 validation already pulls MATIEC from
@@ -19,7 +19,7 @@
 # Requires: Docker. Usage:
 #     bash run_wp1a.sh <program.xml> <program.json> <props.yaml> [unwind]
 #
-# NOTE ON SCOPE: the .ld files vendored in ../rung6 are already K-LD DSL; this
+# NOTE ON SCOPE: the .ld files vendored in ../rung6 are already K-ESBMC DSL; this
 # script needs the ORIGINAL PLCopen XML that ESBMC consumes (from the ESBMC-PLC
 # benchmark repo). The one manual integration step is bindings.h -- mapping
 # VAR(x) onto the MATIEC located-variable symbol for x (see below).

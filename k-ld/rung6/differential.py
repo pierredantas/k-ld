@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Rung 6 / E3 differential oracle -- K-LD side (trace-based, timers-aware).
+Rung 6 / E3 differential oracle -- K-ESBMC side (trace-based, timers-aware).
 
 krun startup is ~30 s under emulation, so per-transition BFS is infeasible. Instead
-we pay startup ONCE: drive K-LD with a single long input trace that cycles through
+we pay startup ONCE: drive K-ESBMC with a single long input trace that cycles through
 every input combination over several sweeps (letting timers/latches evolve), and
-check each props.yaml invariant on every per-scan image K-LD logs in <trace>.
+check each props.yaml invariant on every per-scan image K-ESBMC logs in <trace>.
 
 This is a BOUNDED differential -- it fairly matches ESBMC's bounded unwinding. A
 property is VIOLATED if some scan's image falsifies it (with that scan as witness),
@@ -116,7 +116,7 @@ def main():
             if violations[pid] is None and not prop_holds(kind, expr, img):
                 violations[pid] = (idx, img)
 
-    print(f"# K-LD bounded differential: {len(images)} scans "
+    print(f"# K-ESBMC bounded differential: {len(images)} scans "
           f"({len(combos)} input combos x {sweeps} sweeps)\n")
     for pid, kind, expr in props:
         w = violations[pid]

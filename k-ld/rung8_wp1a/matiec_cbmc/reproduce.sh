@@ -3,13 +3,13 @@
 #   real MATIEC iec2c  --compile-->  C  --real CBMC-->  SAFE / VIOLATED
 #
 # Demonstrates the WP1a mechanism on genuine MATIEC-generated C:
-#   * faithful scan-TON  -> property A proved SAFE   (MATIEC+CBMC sides with K-LD)
+#   * faithful scan-TON  -> property A proved SAFE   (MATIEC+CBMC sides with K-ESBMC)
 #   * havoc timer        -> property A VIOLATED      (the ESBMC false alarm)
 #
 # NOTE ON THE STANDARD LIBRARY. A locally-built iec2c (bison 3.x) does not load
 # matiec's standard-FB library, so the library `TON` (wall-clock) is unavailable
 # here; we express the timer as the equivalent scan-counting state machine in ST
-# -- the exact faithful semantics K-LD implements. The library-`TON` path is what
+# -- the exact faithful semantics K-ESBMC implements. The library-`TON` path is what
 # ../run_wp1a.sh exercises via the OpenPLC container, whose iec2c loads the lib.
 #
 # Requires: cbmc (brew install cbmc) and a built matiec iec2c.

@@ -12,7 +12,7 @@ Same `Btn→TON→Light` probe as WP1a, encoded in SMV two ways:
 
 | Model | NuSMV invariant `Light → Btn` |
 | --- | --- |
-| `faithful.smv` — scan-TON (K-LD semantics; `et` resets when `Btn` low) | **is true** — proved (unbounded) |
+| `faithful.smv` — scan-TON (K-ESBMC semantics; `et` resets when `Btn` low) | **is true** — proved (unbounded) |
 | `havoc.smv` — timer output left free (`Qfree`) | **is false** — CEX `Btn=F, Qfree=T, Light=T` |
 
 Reproduce (NuSMV is open source: <https://nusmv.fbk.eu/distrib/>):
@@ -24,7 +24,7 @@ NUSMV=/path/to/NuSMV bash reproduce.sh
 
 ## Why this matters
 
-- **Three independent engines now agree against ESBMC.** K-LD (reachability),
+- **Three independent engines now agree against ESBMC.** K-ESBMC (reachability),
   MATIEC-C+CBMC (SAT-BMC, WP1a), and NuSMV (BDD, WP1b) all find property A safe
   under a faithful timer and violated under havoc — the ESBMC false alarm is not an
   artifact of any one verification style.

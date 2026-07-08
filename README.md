@@ -1,6 +1,6 @@
-# K-LD — An Executable Formal Semantics of IEC 61131-3 Ladder Diagram
+# K-ESBMC — An Executable Formal Semantics of IEC 61131-3 Ladder Diagram
 
-**K-LD** is an executable formal semantics of the IEC 61131-3 **Ladder Diagram (LD)**
+**K-ESBMC** is an executable formal semantics of the IEC 61131-3 **Ladder Diagram (LD)**
 language, written in the [K framework](https://kframework.org). It extends **K-ST**
 (the K semantics of Structured Text) to the graphical LD language and its function
 blocks, and serves as an **independent reference oracle** for validating the LD→GOTO
@@ -16,16 +16,16 @@ This repository is the **software artifact**. The paper is maintained separately
 
 ```
 k-ld/
-├── ld-syntax.k, ld.k     # the K-LD semantics: contacts, coils/latches, the scan
+├── ld-syntax.k, ld.k     # the K-ESBMC semantics: contacts, coils/latches, the scan
 │                         #   cycle, TON/TOF/TP, CTU/CTD, R_TRIG/F_TRIG
 ├── tests/, Makefile      # per-construct conformance tests (make d-test-*)
 ├── Dockerfile            # builds the K toolchain image (no host install needed)
 ├── validation/           # RQ1: OpenPLC/MATIEC scan-for-scan fidelity harness
-│   ├── run.sh            #   extract MATIEC reference FBs, execute, compare to K-LD
+│   ├── run.sh            #   extract MATIEC reference FBs, execute, compare to K-ESBMC
 │   └── matiec_ref.c
-├── rung6/                # the differential study (K-LD as oracle vs a verifier)
-│   ├── plcopen2kld.py    #   PLCopen XML (simple <rung> format) → K-LD DSL
-│   ├── graphical2kld.py  #   PLCopen XML (graphical netlist) → K-LD DSL
+├── rung6/                # the differential study (K-ESBMC as oracle vs a verifier)
+│   ├── plcopen2kld.py    #   PLCopen XML (simple <rung> format) → K-ESBMC DSL
+│   ├── graphical2kld.py  #   PLCopen XML (graphical netlist) → K-ESBMC DSL
 │   ├── differential.py   #   drive input traces, check each property per scan
 │   ├── run_all.py        #   three-engine driver → results.md
 │   ├── results.md        #   recorded results (13 programs)
@@ -43,7 +43,7 @@ k-ld/
 - For the OpenPLC fidelity check, the `tuttas/openplc_v3` image is pulled
   automatically by `validation/run.sh`.
 - Reproducing the **full** differential additionally needs **ESBMC v8.3.0** and the
-  public ESBMC-PLC **benchmark suite** (both external to this artifact). The K-LD
+  public ESBMC-PLC **benchmark suite** (both external to this artifact). The K-ESBMC
   side of every comparison, and the recorded outcomes in `rung6/results.md`, are
   included here.
 
@@ -62,14 +62,14 @@ make d-test-ton       # run a conformance test (on-delay timer)
 cd k-ld
 make d-test-and d-test-latch d-test-ton d-test-tof d-test-tp d-test-ctu d-test-ctd
 bash validation/run.sh        # executes the MATIEC reference FBs and prints their
-                              # traces; compare against the K-LD traces above
+                              # traces; compare against the K-ESBMC traces above
 ```
 
-**RQ2/RQ3 — the differential** (K-LD side; the ESBMC side needs the external tool):
+**RQ2/RQ3 — the differential** (K-ESBMC side; the ESBMC side needs the external tool):
 ```bash
 cd k-ld/rung6
 python3 graphical2kld.py <bench>.ld gen/<bench>.json > gen/<bench>.ld   # translate
-python3 differential.py gen/<bench>.ld gen/<bench>.json <props>.yaml    # K-LD verdict
+python3 differential.py gen/<bench>.ld gen/<bench>.json <props>.yaml    # K-ESBMC verdict
 # run_all.py drives all benchmarks through both engines -> results.md
 cat results.md FINDINGS.md
 ```
@@ -82,9 +82,9 @@ make d-prove          # kprove the 7 combinational/latch construct lemmas -> #To
 
 ## Results at a glance
 
-- **Fidelity (RQ1).** K-LD reproduces the OpenPLC/MATIEC done-bit trace of every
+- **Fidelity (RQ1).** K-ESBMC reproduces the OpenPLC/MATIEC done-bit trace of every
   function block (TON/TOF/TP, CTU/CTD) exactly, scan for scan.
-- **Differential (RQ2/RQ3).** Over 13 programs, K-LD and ESBMC agree on 10; the three
+- **Differential (RQ2/RQ3).** Over 13 programs, K-ESBMC and ESBMC agree on 10; the three
   disagreements are all genuine ESBMC defects (corroborated by OpenPLC), splitting
   into two timer-translation failure modes — an unsound *skip* (a real violation
   missed) and an imprecise *havoc* (impossible counterexamples). See
@@ -93,20 +93,20 @@ make d-prove          # kprove the 7 combinational/latch construct lemmas -> #To
   `kprove` (7 lemmas). The inductive timer/counter lemmas are open; the obstacle is
   documented in `proof/timer-spec.k`.
 
-## Using K-LD on your own programs
+## Using K-ESBMC on your own programs
 
-K-LD is an independent oracle: you can run it on any IEC 61131-3 LD program and diff
+K-ESBMC is an independent oracle: you can run it on any IEC 61131-3 LD program and diff
 its verdict against **any** verifier (not just ESBMC). For a PLCopen XML diagram
 `mydiagram.ld` and a properties file `myprops.yaml` (using the `invariant` /
 `absence` / `mutual_exclusion` kinds, as in the benchmarks):
 
 ```bash
 cd k-ld/rung6
-# 1. Translate the diagram into K-LD DSL. Pick the frontend by format:
+# 1. Translate the diagram into K-ESBMC DSL. Pick the frontend by format:
 #    graphical netlist -> graphical2kld.py ; linear <rung> format -> plcopen2kld.py
 python3 graphical2kld.py mydiagram.ld gen/mydiagram.json > gen/mydiagram.ld
 
-# 2. Run K-LD as the oracle: it executes the diagram over input traces and checks
+# 2. Run K-ESBMC as the oracle: it executes the diagram over input traces and checks
 #    each property on every scan, returning SAFE / VIOLATED(+witness) per property.
 python3 differential.py gen/mydiagram.ld gen/mydiagram.json myprops.yaml
 

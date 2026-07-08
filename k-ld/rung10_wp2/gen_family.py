@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-WP2 -- controlled synthetic benchmark family for the K-LD differential.
+WP2 -- controlled synthetic benchmark family for the K-ESBMC differential.
 
 The public suite (13 programs) covers the construct fragment only incidentally --
 e.g. its one timer is dead code (paper Sec. 4.4). This generator emits a family
@@ -9,7 +9,7 @@ unsafe variants, with properties that actually OBSERVE the construct under test 
 directly addressing the coverage / property-adequacy gap (review W5b, W8).
 
 Each program is emitted in the exact form the differential harness consumes:
-  <name>.ld          K-LD DSL (the simple/rung format, per ld-syntax.k)
+  <name>.ld          K-ESBMC DSL (the simple/rung format, per ld-syntax.k)
   <name>.json        { "kinds": { var: input|output|local } }
   <name>.props.yaml  properties (invariant/absence: expression; mutual_exclusion: variables)
 

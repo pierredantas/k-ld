@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Behavioral trace signature: run a K-LD program on the standard differential input
+Behavioral trace signature: run a K-ESBMC program on the standard differential input
 trace and print a hash of its full per-scan state trace. Two programs with the same
 signature are observationally equivalent under the oracle; a mutant whose signature
 differs from the original is *behaviorally detected* by the oracle---independent of

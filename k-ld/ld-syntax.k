@@ -1,5 +1,5 @@
 // ============================================================================
-//  K-LD  ::  ld-syntax.k
+//  K-ESBMC  ::  ld-syntax.k
 //  Rung 1 -- Abstract syntax for the covered IEC 61131-3 Ladder Diagram fragment.
 //  This module fixes the paper's fragment F. Semantics live in ld.k.
 // ============================================================================

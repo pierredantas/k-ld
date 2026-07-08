@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-E4 mutation operators for K-LD programs.
+E4 mutation operators for K-ESBMC programs.
 
-Each operator injects one systematic *translation-rule* fault into a K-LD DSL
+Each operator injects one systematic *translation-rule* fault into a K-ESBMC DSL
 program---the kind of mistake a diagram-to-model front-end can make. Given a
 program, we enumerate every single-point mutant for each operator. The differential
 (differential.py) then verifies each mutant against the property suite; a mutant is

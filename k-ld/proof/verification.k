@@ -1,11 +1,11 @@
 // ============================================================================
-//  K-LD :: verification.k  (Rung 8 -- machine-checked construct lemmas)
+//  K-ESBMC :: verification.k  (Rung 8 -- machine-checked construct lemmas)
 //
-//  Reachability claims proved with `kprove` against the K-LD semantics. Each
+//  Reachability claims proved with `kprove` against the K-ESBMC semantics. Each
 //  lemma states the IEC 61131-3 input/output relation for one construct,
 //  discharged symbolically over the bit values (VA, VB). Concrete identifiers
 //  (#token) keep the image-map updates decidable for the Haskell backend.
-//  Composed on paper into the whole-program correspondence, these ground K-LD
+//  Composed on paper into the whole-program correspondence, these ground K-ESBMC
 //  as a reference oracle.
 //
 //  Build:  kompile --backend haskell ld.k   (proof Makefile target `prove-build`)

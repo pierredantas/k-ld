@@ -1,4 +1,4 @@
-# ACM TCPS Peer Review — K-LD (`kesbmc`)
+# ACM TCPS Peer Review — K-ESBMC (`kesbmc`)
 
 **Manuscript:** *`kesbmc`: An Executable Formal Semantics of IEC 61131-3 Ladder Diagram for Validating Verifier Translations*
 **Authors (not anonymized):** Pierre Dantas, Lucas Cordeiro (U. Manchester), Waldir Junior (UFAM)
@@ -26,13 +26,13 @@ Target venue corrected to **TOSEM** (the `\acmJournal{TOSEM}` metadata was right
 
 ## Summary
 
-The paper introduces **`kesbmc` / K-LD**, an executable formal semantics of IEC 61131-3 Ladder Diagram (LD) written in the **K framework**, extending the prior K-ST semantics of Structured Text (Wang et al., 2023) to the graphical language and its function blocks (contacts, energize/latch/unlatch coils, the retentive scan cycle, `TON`/`TOF`/`TP` timers, `CTU`/`CTD` counters, `R_TRIG`/`F_TRIG` edge blocks). Because a K definition yields both an interpreter (`krun`) and a deductive verifier (`kprove`), the authors put the same artifact to three uses:
+The paper introduces **`kesbmc` / K-ESBMC**, an executable formal semantics of IEC 61131-3 Ladder Diagram (LD) written in the **K framework**, extending the prior K-ST semantics of Structured Text (Wang et al., 2023) to the graphical language and its function blocks (contacts, energize/latch/unlatch coils, the retentive scan cycle, `TON`/`TOF`/`TP` timers, `CTU`/`CTD` counters, `R_TRIG`/`F_TRIG` edge blocks). Because a K definition yields both an interpreter (`krun`) and a deductive verifier (`kprove`), the authors put the same artifact to three uses:
 
-1. **RQ1 — fidelity.** K-LD's function blocks are validated **scan-for-scan** against the MATIEC/OpenPLC reference C implementations that run on real open-hardware PLCs (Table 2, exact agreement on 5 blocks).
-2. **RQ2/RQ3 — differential oracle.** K-LD is used as an independent reference oracle for the ESBMC-PLC LD→GOTO translation over a 13-program benchmark suite. 10/13 agree; the 3 disagreements are all ESBMC timer-translation defects, corroborated by OpenPLC, and classified into two opposite failure modes: an unsound **skip** (certifies a violating program safe — `stairs_light`) and an imprecise **havoc** (manufactures impossible counterexamples — `traffic_light`).
+1. **RQ1 — fidelity.** K-ESBMC's function blocks are validated **scan-for-scan** against the MATIEC/OpenPLC reference C implementations that run on real open-hardware PLCs (Table 2, exact agreement on 5 blocks).
+2. **RQ2/RQ3 — differential oracle.** K-ESBMC is used as an independent reference oracle for the ESBMC-PLC LD→GOTO translation over a 13-program benchmark suite. 10/13 agree; the 3 disagreements are all ESBMC timer-translation defects, corroborated by OpenPLC, and classified into two opposite failure modes: an unsound **skip** (certifies a violating program safe — `stairs_light`) and an imprecise **havoc** (manufactures impossible counterexamples — `traffic_light`).
 3. **RQ4 — mechanization.** Seven per-construct correctness lemmas for the combinational + latch fragment are machine-checked in `kprove`.
 
-A fault-injection study (60 single-point mutants, 5 operators) argues a **property-adequacy gap**: K-LD flags all 40 behavior-changing mutants, but the benchmarks' own safety properties detect only 11 (27%). The claimed broader contribution is methodological — an executable reference semantics as a general route to *audit* translation-based verifiers.
+A fault-injection study (60 single-point mutants, 5 operators) argues a **property-adequacy gap**: K-ESBMC flags all 40 behavior-changing mutants, but the benchmarks' own safety properties detect only 11 (27%). The claimed broader contribution is methodological — an executable reference semantics as a general route to *audit* translation-based verifiers.
 
 ---
 
@@ -56,7 +56,7 @@ Under the corrected TOSEM target this is **no longer a weakness.** The contribut
 For `stairs_light` (Discrepancy 2 / §4.3 / §5.1), ESBMC-PLC's own front-end **prints a warning** that "FB/timer outputs on rail→coil paths are not yet modeled" and skips the rung. So the "unsound missed bug" is arguably a **documented, self-announced incompleteness**, not a hidden defect the oracle uncovered. This substantially weakens the "we caught a dangerous soundness bug" narrative for that case: a user is warned. The paper should (a) acknowledge that ESBMC emits this warning and argue why silent-warning-plus-`VERIFICATION SUCCESSFUL` is still unsound-in-effect (a fair argument — the verdict contradicts the warning), and (b) lean more on the **havoc** case (`traffic_light`), which is the genuinely subtle, non-self-reported defect. As written, §1.4 and §5.1 oversell the skip case.
 
 ### W3 — The oracle and its "independent" tie-breaker share a ground truth
-K-LD's timers/counters are validated *against* MATIEC (§3.2), and MATIEC/OpenPLC is then used as the *independent* tie-breaker for disagreements (§4.1, engine iii). These are the **same C codebase**. If MATIEC itself deviates from IEC 61131-3 (it is a community implementation, not a certified reference), then K-LD and its "independent third witness" are wrong *together*, and the paper's repeated "OpenPLC confirms" carries less weight than "independent" implies. The paper half-acknowledges this ("we take MATIEC's implementations as ground truth") but simultaneously frames OpenPLC as *independent* corroboration (abstract; §4.3; §6 "an independent third witness"). **This is a construct-validity issue that should be stated plainly:** the ground truth is *deployed-runtime behavior*, not the *standard text*, and the standard-conformance claim rests on the (unverified) assumption that MATIEC conforms.
+K-ESBMC's timers/counters are validated *against* MATIEC (§3.2), and MATIEC/OpenPLC is then used as the *independent* tie-breaker for disagreements (§4.1, engine iii). These are the **same C codebase**. If MATIEC itself deviates from IEC 61131-3 (it is a community implementation, not a certified reference), then K-ESBMC and its "independent third witness" are wrong *together*, and the paper's repeated "OpenPLC confirms" carries less weight than "independent" implies. The paper half-acknowledges this ("we take MATIEC's implementations as ground truth") but simultaneously frames OpenPLC as *independent* corroboration (abstract; §4.3; §6 "an independent third witness"). **This is a construct-validity issue that should be stated plainly:** the ground truth is *deployed-runtime behavior*, not the *standard text*, and the standard-conformance claim rests on the (unverified) assumption that MATIEC conforms.
 
 ### W4 — RQ4 proves the easy fragment; the interesting constructs are unmechanized
 The seven machine-checked lemmas (Table 4) cover exactly the **combinational + latch** fragment — single-scan, near-trivial properties. Every *defect the paper finds is in timers*, which are **not** mechanized (§3.4 boundary paragraph). So the "in part proven" assurance layer does not touch the part of the semantics on which the entire empirical contribution depends. This is disclosed honestly, but it means RQ4's contribution is modest and should not be foregrounded as if it de-risks the timer results. Consider framing RQ4 as "sanity-level mechanization of the base fragment" rather than a headline contribution.
@@ -85,14 +85,14 @@ Acknowledged in §7, but worth restating as a weakness: 2 benchmarks, the **latc
 6. **Reconcile Tables 3 and 5** (W6) and make the disagreement count unambiguous throughout.
 7. **Reframe RQ4** (W4) as base-fragment mechanization, not a de-risking of the timer results; be explicit that the proven fragment and the buggy fragment are disjoint.
 8. **Tighten the sampling threat** (W7) to distinguish memoryless from path-dependent violations.
-9. **Writing:** the abstract's first sentence has a broken subject/verb structure — "*Automated verifiers … (e.g., the ESBMC-PLC line), lowers LD into a GOTO IR …*" (plural subject, singular verb, dangling clause). Rewrite. Also give a consistent name: the tool is variously `kesbmc` and "K-LD" (title vs. running text) — pick one and define the relationship once.
+9. **Writing:** the abstract's first sentence has a broken subject/verb structure — "*Automated verifiers … (e.g., the ESBMC-PLC line), lowers LD into a GOTO IR …*" (plural subject, singular verb, dangling clause). Rewrite. Also give a consistent name: the tool is variously `kesbmc` and "K-ESBMC" (title vs. running text) — pick one and define the relationship once.
 
 ---
 
 ## Questions for the Authors
 
 1. Does ESBMC-PLC emit its "timer not yet modeled" warning on `stairs_light` at the same time it returns `VERIFICATION SUCCESSFUL`? If so, why is this a *silent* soundness defect rather than a *documented* incompleteness with a loud warning?
-2. Since K-LD's timers were *ported from* MATIEC and MATIEC is *also* the tie-breaker, what independent evidence do you have that MATIEC itself conforms to the IEC 61131-3 text (as opposed to being the de-facto behavior you've defined conformance to be)?
+2. Since K-ESBMC's timers were *ported from* MATIEC and MATIEC is *also* the tie-breaker, what independent evidence do you have that MATIEC itself conforms to the IEC 61131-3 text (as opposed to being the de-facto behavior you've defined conformance to be)?
 3. Table 3 shows three disagreeing rows but Table 5 two defect classes — how many *distinct programs* and how many *distinct defects* are you claiming? Please make the count consistent.
 4. Your generality claim is central. What prevents running the differential against PLCverif or Arcade.PLC on the same 13 benchmarks, and would you commit to including at least one second verifier?
 5. For the bounded differential: can your per-scan input enumeration expose a violation that requires a *specific correlated input sequence across scans* (e.g., a counter that only overflows under a particular ordering), or only memoryless per-scan violations?
@@ -148,5 +148,5 @@ Scope fit is strong: an executable reference semantics used to audit a translati
 6. Reconcile Tables 3 and 5 and make the disagreement count consistent (W6).
 7. Tighten the bounded-sampling threat to distinguish memoryless vs. path-dependent violations (W7).
 8. Broaden or downgrade the fault-injection study (latch/timer operators are under-exercised) (W8).
-9. Fix the abstract's opening sentence (broken subject/verb) and settle the `kesbmc` vs. K-LD naming.
+9. Fix the abstract's opening sentence (broken subject/verb) and settle the `kesbmc` vs. K-ESBMC naming.
 10. *(Optional)* Add a one-line physical-consequence note for the stairwell-light defect to sharpen motivation — presentation only, not required for TOSEM.

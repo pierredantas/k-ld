@@ -1,8 +1,8 @@
-# Rung 6 — E3 Differential Oracle (K-LD vs ESBMC LD→GOTO)
+# Rung 6 — E3 Differential Oracle (K-ESBMC vs ESBMC LD→GOTO)
 
 Three engines on each benchmark:
 1. **ESBMC** `esbmc bench.ld --ld-props props.yaml` — the LD→GOTO path under test.
-2. **K-LD** (`differential.py`) — exhaustive reachability oracle: drives every input
+2. **K-ESBMC** (`differential.py`) — exhaustive reachability oracle: drives every input
    combination each scan via `krun`, BFS to a fixpoint over the finite retained-state
    space, checks each property invariant on every reachable image → SAFE / VIOLATED+witness.
 3. **OpenPLC/MATIEC** (`../validation/`) — external tie-breaker when 1 and 2 disagree.
@@ -10,8 +10,8 @@ Three engines on each benchmark:
 ## Pipeline
 
 ```
-plcopen2kld.py  bench.ld  sidecar.json   # PLCopen XML -> K-LD DSL (+ in/out/local classification)
-differential.py prog.ld  sidecar.json  props.yaml   # K-LD verdict per property
+plcopen2kld.py  bench.ld  sidecar.json   # PLCopen XML -> K-ESBMC DSL (+ in/out/local classification)
+differential.py prog.ld  sidecar.json  props.yaml   # K-ESBMC verdict per property
 ```
 
 Two frontends (both independent of ESBMC):
@@ -54,13 +54,13 @@ toggle race); real timer presets when PT is a variable rather than an inVariable
 
 ## Results so far
 
-| Benchmark | ESBMC | K-LD | Agree | Notes |
+| Benchmark | ESBMC | K-ESBMC | Agree | Notes |
 |-----------|-------|------|-------|-------|
 | tank_level_control (safe)   | SUCCESSFUL | P2–P5 SAFE | ✅ | exhaustive: 3 reachable states |
 | tank_level_control (unsafe) | FAILED     | P2,P3 VIOLATED (+witness) | ✅ | witness PUMP∧HIGH_SWITCH, VALVE∧LOW_SWITCH |
 | bottle_filling (safe)       | SUCCESSFUL | P1–P6 SAFE-to-bound | ✅ | **timer TON modelled** (PT=2); ESBMC skips it, still agree |
 | bottle_filling (unsafe)     | FAILED     | P1,P2 VIOLATED + absence P4,P6 VIOLATED; P3,P5 safe | ✅ | witnesses valve∧¬bottle, valve∧full; P3/P5 correctly still-safe (E-stop protection survives via System_Running) |
-| beremiz_traffic_light       | SUCCESSFUL (skips FB blocks) | P1–P3 SAFE-to-bound | ✅ | graphical; TON + R_TRIG cycle modelled by K-LD, skipped by ESBMC; no divergence on these props |
+| beremiz_traffic_light       | SUCCESSFUL (skips FB blocks) | P1–P3 SAFE-to-bound | ✅ | graphical; TON + R_TRIG cycle modelled by K-ESBMC, skipped by ESBMC; no divergence on these props |
 | stairs_light (graphical)    | SUCCESSFUL (skips TOF) | **P1 VIOLATED @scan2** | ❌ **missed bug** | see FINDINGS.md — ESBMC unsound (drops the off-delay timer) |
 
 Note on bottle_filling: ESBMC *skips* the TON block yet still agrees, because none of

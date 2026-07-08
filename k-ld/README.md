@@ -1,4 +1,4 @@
-# K-LD — Executable Formal Semantics for IEC 61131-3 Ladder Diagram
+# K-ESBMC — Executable Formal Semantics for IEC 61131-3 Ladder Diagram
 
 Machine-checked LD semantics in the **K framework**, extending **K-ST** (Wang et al., TSE 2023).
 Serves as the reference oracle to validate the ESBMC-PLC `LD → GOTO IR` translation.
@@ -53,16 +53,16 @@ docker run -d -p 8080:8080 --name openplc thiagoralves/openplc_v3
 
 ## Ground-truth validation (E1/E2) vs OpenPLC
 
-`validation/` cross-checks K-LD against OpenPLC's actual engine. `run.sh` extracts
+`validation/` cross-checks K-ESBMC against OpenPLC's actual engine. `run.sh` extracts
 MATIEC's reference function-block C (`iec_std_FB.h`, the exact code OpenPLC runs)
 from the container, compiles `matiec_ref.c` against it, and executes the same input
-traces K-LD uses. All five FBs (TON/TOF/TP, CTU/CTD) match K-LD scan-for-scan.
+traces K-ESBMC uses. All five FBs (TON/TOF/TP, CTU/CTD) match K-ESBMC scan-for-scan.
 
 ```
 bash validation/run.sh      # requires Docker
 ```
 
-This is what caught (and fixed) the timer off-by-one and CTU saturation: K-LD's
+This is what caught (and fixed) the timer off-by-one and CTU saturation: K-ESBMC's
 timers are now a direct port of MATIEC's 3-valued STATE machine, so they fire
 PT/Δt scans after the trigger edge exactly like OpenPLC/IEC.
 

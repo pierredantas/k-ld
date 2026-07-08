@@ -12,7 +12,7 @@ gap the review flags (W5b, and the property-adequacy point behind W8).
 - `gen_family.py` — generator; emits the family + `coverage.md` from one spec list.
 - `family/` — **15 programs**, each a triple in the exact form the differential
   harness consumes:
-  - `<name>.ld` — K-LD DSL (simple/rung format, per `k-ld/ld-syntax.k`)
+  - `<name>.ld` — K-ESBMC DSL (simple/rung format, per `k-ld/ld-syntax.k`)
   - `<name>.json` — `{ "kinds": { var: input|output|local } }`
   - `<name>.props.yaml` — properties (`invariant`/`absence` → `expression`;
     `mutual_exclusion` → `variables: [..]`)
@@ -30,7 +30,7 @@ cases a skipping/havocing front-end mishandles, i.e. the stairs/pulse mechanisms
 
 ## Status — authored and label-validated; ready for the differential
 
-K-LD's interpreter (`krun`) is the primary oracle for this family:
+K-ESBMC's interpreter (`krun`) is the primary oracle for this family:
 ```bash
 for p in family/*.ld; do
   python3 ../rung6/differential.py "$p" "${p%.ld}.json" "${p%.ld}.props.yaml"
@@ -59,6 +59,6 @@ NUSMV=/path/to/NuSMV bash validate/reproduce.sh
   a mechanical follow-up.
 - The NuSMV checks validate the *expected verdicts* of three members via
   hand-written SMV encodings of their faithful semantics; the full 15-program run
-  through the K-LD oracle is the primary evaluation and runs under `differential.py`.
+  through the K-ESBMC oracle is the primary evaluation and runs under `differential.py`.
 - This grows the corpus from 13 to 28 with **documented, systematic** coverage — the
   plan's target was breadth of coverage, not raw count.

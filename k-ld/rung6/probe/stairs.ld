@@ -1,4 +1,4 @@
-// Hand-translation of benchmarks/stairs_light/stairs_light.ld into K-LD DSL.
+// Hand-translation of benchmarks/stairs_light/stairs_light.ld into K-ESBMC DSL.
 // Faithful to the graphical netlist:
 //   * buttons toggle lights_buttons_state (rising-edge, set-if-off / reset-if-on)
 //   * rising PIR edge (gated by NOT lights_buttons_state) drives TOF(20s)

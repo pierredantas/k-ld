@@ -1,4 +1,4 @@
-# K-LD build & run targets.
+# K-ESBMC build & run targets.
 #
 # Two ways to run:
 #   (A) Host K on PATH (Nix/kup install) -- use the plain targets: build, test-*.

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Rung 6 driver: run every benchmark through K-LD and ESBMC and emit a results table.
+Rung 6 driver: run every benchmark through K-ESBMC and ESBMC and emit a results table.
 For each .ld: pick the frontend (simple <rung> vs graphical netlist), translate,
-run the K-LD bounded differential, run ESBMC --ld-props, and record verdicts +
+run the K-ESBMC bounded differential, run ESBMC --ld-props, and record verdicts +
 agreement. Writes results.md incrementally so progress is visible.
 """
 import os, re, glob, subprocess, sys
@@ -82,7 +82,7 @@ def main():
     rows = []
     with open(OUT, "w") as f:
         f.write("# Rung 6 — three-engine results\n\n")
-        f.write("| Benchmark | Fmt | K-LD | ESBMC | Agree |\n|---|---|---|---|---|\n")
+        f.write("| Benchmark | Fmt | K-ESBMC | ESBMC | Agree |\n|---|---|---|---|---|\n")
     for ld in lds:
         d = os.path.basename(os.path.dirname(ld))
         b = os.path.basename(ld)

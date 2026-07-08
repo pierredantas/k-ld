@@ -1,6 +1,6 @@
 # E4 — Fault Injection and the Property-Adequacy Gap
 
-We inject single-point *translation-rule* faults into K-LD programs (see `mutate.py`)
+We inject single-point *translation-rule* faults into K-ESBMC programs (see `mutate.py`)
 and ask two questions of each mutant: does it change observable behavior (the oracle's
 full per-scan trace), and does it flip any of the benchmark's own safety properties?
 The gap between the two answers is the finding.

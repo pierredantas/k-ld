@@ -28,9 +28,9 @@ with the operators actually firing (review W8).
 
 ## The measurement oracle (`ld_exec.py`)
 
-K-LD's `krun` is the canonical oracle but is not installed in the authoring
+K-ESBMC's `krun` is the canonical oracle but is not installed in the authoring
 environment, so the campaign uses `ld_exec.py` — a faithful re-implementation of the
-K-LD scan-cycle semantics (contacts, OTE/OTL/OTU retention, TON/TOF/TP, CTU/CTD, edges
+K-ESBMC scan-cycle semantics (contacts, OTE/OTL/OTU retention, TON/TOF/TP, CTU/CTD, edges
 via prev-value). It is **validated** (`validate_exec.py`) two ways:
 
 1. it reproduces the paper's **RQ1 reference done-bit traces** (Table 2 / the MATIEC

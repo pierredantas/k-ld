@@ -1,5 +1,5 @@
 // ============================================================================
-//  K-LD  ::  ld.k
+//  K-ESBMC  ::  ld.k
 //  Rung 3 -- scan-cycle model + retentive coils.
 //
 //  MODEL:
@@ -99,7 +99,7 @@ module LD
   //  Timers -- direct port of the MATIEC/OpenPLC reference FBs (iec_std_FB.h).
   //  STATE: 0 idle, 1 timing, 2 done. Elapsed ET measured from the trigger edge
   //  (ET = 0 on the edge scan); fires when ET reaches PT, i.e. PT/DT scans after
-  //  the edge -- so K-LD agrees with OpenPLC scan-for-scan.
+  //  the edge -- so K-ESBMC agrees with OpenPLC scan-for-scan.
   // ============================================================================
 
   // ---- TON (on-delay) ------------------------------------------------------

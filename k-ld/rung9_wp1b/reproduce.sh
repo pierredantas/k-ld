@@ -8,7 +8,7 @@
 # NuSMV's BDD fixpoint is a fundamentally different algorithm from ESBMC's SMT-BMC
 # and CBMC's SAT-BMC, and its proof is unbounded -- so a TRUE result here is a
 # complete proof over all reachable states, not safe-up-to-horizon. Three engines
-# (K-LD reachability, MATIEC-C+CBMC, NuSMV BDD) now agree against ESBMC.
+# (K-ESBMC reachability, MATIEC-C+CBMC, NuSMV BDD) now agree against ESBMC.
 #
 # SCOPE (honest): this is an independent *engine*, not an independent *front-end* --
 # we author the SMV model, so it does not test another tool's timer handling the

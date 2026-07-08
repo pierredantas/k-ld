@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-plcopen2kld -- independent frontend for K-LD's Rung 6 differential (E3).
+plcopen2kld -- independent frontend for K-ESBMC's Rung 6 differential (E3).
 
 Translates the *simplified* PLCopen rung format (linear <contact> series + <coil>,
-plus TON/TOF/TP <block>s) used by the ESBMC-PLC benchmarks into K-LD DSL.
+plus TON/TOF/TP <block>s) used by the ESBMC-PLC benchmarks into K-ESBMC DSL.
 Emits both the .ld program and a JSON sidecar classifying inputs/outputs/locals so
 the differential harness knows what to drive and what to observe.
 
@@ -64,7 +64,7 @@ def parse(path):
 
 
 def rung_expr(contacts):
-    """Series contacts -> K-LD BExp (AND of XIC/XIO). Empty -> the power rail (TRUE)."""
+    """Series contacts -> K-ESBMC BExp (AND of XIC/XIO). Empty -> the power rail (TRUE)."""
     if not contacts:
         return None
     terms = [f"{'XIO' if neg else 'XIC'}({v})" for (v, neg) in contacts]
@@ -97,7 +97,7 @@ def translate(kinds, rungs, initials, default_pt):
                 out.append(f"OTE({var}) := {e} ;")
         for (typ, inst, params) in blocks:
             if typ in ('TON', 'TOF', 'TP'):
-                q_var = params.get('Q')                       # done bit -> K-LD instance Id
+                q_var = params.get('Q')                       # done bit -> K-ESBMC instance Id
                 in_var = params.get('IN')
                 pt = parse_time(initials.get(params.get('PT', '')), default_pt)
                 in_expr = f"XIC({in_var})" if in_var else "XIC(__RAIL)"
@@ -120,7 +120,7 @@ def main():
             json.dump({'kinds': kinds,
                        'inputs':  [v for v, k in kinds.items() if k == 'input'],
                        'outputs': [v for v, k in kinds.items() if k == 'output'],
-                       # timer done-bits are driven by K-LD, not free state bits
+                       # timer done-bits are driven by K-ESBMC, not free state bits
                        'locals':  [v for v, k in kinds.items()
                                    if k == 'local' and v not in timer_ids],
                        'timers':  timers},

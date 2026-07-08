@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-ld_exec.py -- a faithful executor of the K-LD DSL fragment, used as the WP3
+ld_exec.py -- a faithful executor of the K-ESBMC DSL fragment, used as the WP3
 fault-injection *measurement* instrument.
 
-K-LD's krun is the canonical oracle; it is not installed in the authoring
+K-ESBMC's krun is the canonical oracle; it is not installed in the authoring
 environment. This module re-implements the same scan-cycle semantics (contacts,
 OTE/OTL/OTU with retention, TON/TOF/TP, CTU/CTD, edges via prev-value) so the
 mutation campaign can compute behavioral- and property-detection for every mutant

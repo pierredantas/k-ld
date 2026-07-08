@@ -1,5 +1,5 @@
 #include "bindings.h"
-/* Faithful TON (MATIEC/K-LD semantics): Q holds only while IN is high, and
+/* Faithful TON (MATIEC/K-ESBMC semantics): Q holds only while IN is high, and
    fires after PT scans measured from the rising edge. This is what MATIEC-C
    compiles to, so MATIEC-C+CBMC behaves like this model. */
 int g_Btn = 0, g_Light = 0;

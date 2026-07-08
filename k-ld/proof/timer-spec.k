@@ -1,5 +1,5 @@
 // ============================================================================
-//  K-LD :: timer-spec.k  (Rung 8 -- first INDUCTIVE lemma)
+//  K-ESBMC :: timer-spec.k  (Rung 8 -- first INDUCTIVE lemma)
 //
 //  TON done-state stability: once a TON has fired (STATE = 2), holding IN true
 //  keeps the done bit true for ANY number of further scans. Unlike the
